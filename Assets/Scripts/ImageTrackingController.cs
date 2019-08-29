@@ -43,17 +43,21 @@ namespace GoogleARCore.Examples.AugmentedImage
         /// <summary>
         /// A prefab for visualizing an AugmentedImage.
         /// </summary>
-        public FoundImageManager ARBookPageVisualizerPrefab;
+        public TrackedImage TrackedImagePrefab;
 
         /// <summary>
         /// The overlay containing the fit to scan user guide.
         /// </summary>
         public GameObject FitToScanOverlay;
 
-        private Dictionary<int, FoundImageManager> m_Visualizers
-            = new Dictionary<int, FoundImageManager>();
+        private Dictionary<int, TrackedImage> m_TrackedImages
+            = new Dictionary<int, TrackedImage>();
 
         private List<AugmentedImage> m_TempAugmentedImages = new List<AugmentedImage>();
+
+        private TrackedImage currentlyTracked;
+
+        public Text printToScreen;
 
         /// <summary>
         /// The Unity Awake() method.
@@ -94,29 +98,54 @@ namespace GoogleARCore.Examples.AugmentedImage
             // not previously have a visualizer. Remove visualizers for stopped images.
             foreach (var image in m_TempAugmentedImages)
             {
-                FoundImageManager visualizer = null;
-                m_Visualizers.TryGetValue(image.DatabaseIndex, out visualizer);
-                if (image.TrackingState == TrackingState.Tracking && visualizer == null)
+                currentlyTracked = null;
+                m_TrackedImages.TryGetValue(image.DatabaseIndex, out currentlyTracked);
+                if (image.TrackingState == TrackingState.Tracking && image.TrackingMethod == AugmentedImageTrackingMethod.FullTracking && currentlyTracked == null)
                 {
                     // Create an anchor to ensure that ARCore keeps tracking this augmented image.
                     Anchor anchor = image.CreateAnchor(image.CenterPose);
-                    visualizer = (FoundImageManager)Instantiate(
-                        ARBookPageVisualizerPrefab, anchor.transform);
-                    visualizer.transform.rotation = Quaternion.identity;
-                    visualizer.Image = image;
-                    m_Visualizers.Add(image.DatabaseIndex, visualizer);
+                    currentlyTracked = (TrackedImage)Instantiate(
+                        TrackedImagePrefab, anchor.transform);
+                    currentlyTracked.image = image;
+                    currentlyTracked.transform.rotation = Quaternion.identity;
+                    currentlyTracked.transform.parent = this.transform;
+                    m_TrackedImages.Add(image.DatabaseIndex, currentlyTracked);
                 }
-                else if (image.TrackingState == TrackingState.Stopped && visualizer != null)
+                else if (image.TrackingState == TrackingState.Stopped && currentlyTracked != null)
                 {
-                    m_Visualizers.Remove(image.DatabaseIndex);
-                    GameObject.Destroy(visualizer.gameObject);
+                    m_TrackedImages.Remove(image.DatabaseIndex);
+                    GameObject.Destroy(currentlyTracked.gameObject);
+                }
+            }
+
+            //User touched screen to reset tracking if issues or turning page in book
+            if (Input.GetMouseButtonDown(1))
+            {
+                foreach (var image in m_TempAugmentedImages)
+                {
+                    currentlyTracked = null;
+                    m_TrackedImages.TryGetValue(image.DatabaseIndex, out currentlyTracked);
+                    if (currentlyTracked != null)
+                    {
+                        m_TrackedImages.Remove(image.DatabaseIndex);
+                        GameObject.Destroy(currentlyTracked.gameObject);
+                    }
+                }
+            }
+
+            if(Input.GetMouseButton(0))
+            {
+                printToScreen.text = Input.GetTouch(0).deltaPosition.x.ToString();
+                for(int i = 0; i < transform.childCount; i++)
+                {
+                    transform.GetChild(i).rotation = Quaternion.Euler(0f, transform.GetChild(i).rotation.eulerAngles.y + Input.GetTouch(0).deltaPosition.x, 0f);
                 }
             }
 
             // Show the fit-to-scan overlay if there are no images that are Tracking.
-            foreach (var visualizer in m_Visualizers.Values)
+            foreach (var potentallyTrackedImages in m_TrackedImages.Values)
             {
-                if (visualizer.Image.TrackingState == TrackingState.Tracking)
+                if (potentallyTrackedImages.image.TrackingState == TrackingState.Tracking)
                 {
                     FitToScanOverlay.SetActive(false);
                     return;

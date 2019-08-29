@@ -10,20 +10,20 @@
     public class TrackerBase : MonoBehaviour
     {
         private bool[] interfaceBits = new bool[3];
-        private FoundImageManager visualizer;
+        private TrackedImage thisTrackedImage;
         private bool coolDownTime = true;
         private int stationCounter;
 
         // Use this for initialization
         void Start()
         {
-            visualizer = GetComponent<FoundImageManager>();
+            thisTrackedImage = GetComponent<TrackedImage>();
             for(int i = 0; i < 3; i++)
             {
                 interfaceBits[i] = true;
             }
         }
-
+        /*
         private void Update()
         {
             if(Input.GetMouseButtonDown(0))
@@ -53,7 +53,7 @@
                 }
             }
         }
-
+        */
         public void SetInterface(int interfaceBit)
         {
             if(coolDownTime)
