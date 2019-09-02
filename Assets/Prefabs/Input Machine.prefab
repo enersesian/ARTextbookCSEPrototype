@@ -36,6 +36,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4190264046290832}
+  - component: {fileID: 114257280162437426}
   m_Layer: 0
   m_Name: Input Machine
   m_TagString: Untagged
@@ -214,3 +215,14 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1776059157788304}
   m_Mesh: {fileID: 4300000, guid: dc9369158f7782d4d9c8eb3ae694a2ee, type: 3}
+--- !u!114 &114257280162437426
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1646401289346920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5c4cdd9fc5c8e4ca5492d21411f0cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

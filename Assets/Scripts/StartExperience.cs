@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StartExperience : MonoBehaviour {
+public class StartExperience : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		
+
+    // Use this for initialization
+    void Start () {
+        //Invoke("UpdateTextTest", 2f);
 	}
 	
 	// Update is called once per frame
@@ -18,4 +20,9 @@ public class StartExperience : MonoBehaviour {
             this.enabled = false;
         }
 	}
+
+    private void UpdateTextTest()
+    {
+        GetComponent<InstructionalTextManager>().UpdateText("This is a test", true);
+    }
 }

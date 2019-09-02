@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using GoogleARCore;
 using GoogleARCoreInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrackerInteractive : MonoBehaviour
 {
@@ -11,11 +12,11 @@ public class TrackerInteractive : MonoBehaviour
     private TrackerBase mainTracker;
     private float timeSinceFullTrackingMethod;
     private bool isFullTracked;
+    private bool currentElementIsBitSetToOne = true;
 
     private void Start()
     {
-        thisTrackedImage = GetComponent<TrackedImage>();
-        mainTracker = thisTrackedImage.GetMainTracker();
+        thisTrackedImage = transform.parent.GetComponent<TrackedImage>();
     }
 
     public void Update()
@@ -29,8 +30,8 @@ public class TrackerInteractive : MonoBehaviour
         if (thisTrackedImage.image.TrackingMethod == AugmentedImageTrackingMethod.FullTracking)
         {
             isFullTracked = true;
-            thisTrackedImage.InteractionNotice(true);
-            thisTrackedImage.SetBit(true);
+            InteractionNotice(true);
+            SetBit(true);
         }
 
         //user placed down the peppermint token and covered the tracked image
@@ -39,20 +40,44 @@ public class TrackerInteractive : MonoBehaviour
             timeSinceFullTrackingMethod += Time.deltaTime;
             if (timeSinceFullTrackingMethod > 1f)
             {
-                //thisTrackedImage.ARBookPageElements[thisTrackedImage.thisImageDatabaseElement].SetActive(false);
-                //mainTracker = thisTrackedImage.GetMainTracker(); //secondary tracker may be created before main tracker and cant set this in start method
-                //mainTracker.SetInterface(thisTrackedImage.thisImageDatabaseElement - 1);
-
-                thisTrackedImage.SetBit(false);
+                SetBit(false);
                 isFullTracked = false;
                 timeSinceFullTrackingMethod = 0f;
-                thisTrackedImage.InteractionNotice(false);
+                InteractionNotice(false);
             }
         }
         else
         {
             //thisTrackedImage.ARBookPageElements[thisTrackedImage.thisImageDatabaseElement].SetActive(true);
             timeSinceFullTrackingMethod = 0f;
+        }
+    }
+
+    private void SetBit(bool temp)
+    {
+        if (temp)//currentElementIsBitSetToOne)
+        {
+            transform.GetChild(0).GetComponent<Text>().text = "0";
+            transform.GetChild(1).GetComponent<Text>().text = "Off";
+            currentElementIsBitSetToOne = false;
+        }
+        else
+        {
+            transform.GetChild(0).GetComponent<Text>().text = "1";
+            transform.GetChild(1).GetComponent<Text>().text = "On";
+            currentElementIsBitSetToOne = true;
+        }
+    }
+
+    private void InteractionNotice(bool isReady)
+    {
+        if (isReady)
+        {
+            transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, 0.3f);
+        }
+        else
+        {
+            transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.3f);
         }
     }
 }

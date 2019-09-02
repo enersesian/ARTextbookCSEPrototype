@@ -21,37 +21,7 @@ public class TrackerBase : MonoBehaviour
             interfaceBits[i] = true;
         }
     }
-    /*
-    private void Update()
-    {
-        if(Input.GetMouseButtonDown(0))
-        {
-            switch(stationCounter)
-            {
-                case 0:
-                    transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-                    transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-                    stationCounter = 1;
-                    break;
-                case 1:
-                    transform.GetChild(0).GetChild(1).gameObject.SetActive(false);
-                    transform.GetChild(0).GetChild(2).gameObject.SetActive(true);
-                    stationCounter = 2;
-                    break;
-                case 2:
-                    transform.GetChild(0).GetChild(2).gameObject.SetActive(false);
-                    transform.GetChild(0).GetChild(3).gameObject.SetActive(true);
-                    stationCounter = 3;
-                    break;
-                case 3:
-                    transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
-                    transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-                    stationCounter = 0;
-                    break;
-            }
-        }
-    }
-    */
+
     public void SetInterface(int interfaceBit)
     {
         if(coolDownTime)

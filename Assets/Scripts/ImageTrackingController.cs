@@ -26,7 +26,7 @@ public class ImageTrackingController : MonoBehaviour
     /// <summary>
     /// The overlay containing the fit to scan user guide.
     /// </summary>
-    public GameObject FitToScanOverlay;
+    public UITransition FitToScanOverlay;
 
     private Dictionary<int, TrackedImage> m_TrackedImages
         = new Dictionary<int, TrackedImage>();
@@ -35,11 +35,10 @@ public class ImageTrackingController : MonoBehaviour
 
     private TrackedImage currentlyTracked;
 
-    public Text printToScreenTop, printToScreenBottom;
-
     private bool[] isImageTracked = new bool[7];
     private bool shouldImageBeTracked;
     private int resetCounter;
+    private InstructionalTextManager instructions;
 
     /// <summary>
     /// The Unity Awake() method.
@@ -49,6 +48,7 @@ public class ImageTrackingController : MonoBehaviour
         // Enable ARCore to target 60fps camera capture frame rate on supported devices.
         // Note, Application.targetFrameRate is ignored when QualitySettings.vSyncCount != 0.
         Application.targetFrameRate = 60;
+        instructions = GetComponent<InstructionalTextManager>();
     }
 
     private void OnEnable()
@@ -98,20 +98,19 @@ public class ImageTrackingController : MonoBehaviour
                         switch (image.DatabaseIndex)
                         {
                             case 0:
-                                printToScreenTop.text = "Welcome to the Task Station Page";
+                                instructions.UpdateText("Welcome to the Task Station Page, swipe finger to rotate station", true);
                                 break;
                             case 1:
-                                printToScreenTop.text = "Welcome to the Number Station Page";
+                                instructions.UpdateText("Welcome to the Number Station Page, swipe finger to rotate station", true);
                                 break;
                             case 2:
-                                printToScreenTop.text = "Welcome to the Shape Station Page";
+                                instructions.UpdateText("Welcome to the Shape Station Page, swipe finger to rotate station", true);
                                 break;
                             case 3:
-                                printToScreenTop.text = "Welcome to the Color Station Page";
+                                instructions.UpdateText("Welcome to the Color Station Page, swipe finger to rotate station", true);
                                 break;
                         }
-                        printToScreenTop.text += ", swipe finger to rotate station\n";
-                        printToScreenBottom.text = "When done viewing station model, please scan right page to start AR lesson";
+                        instructions.UpdateText("When done viewing station model, please scan right page to start AR lesson", false);
                         isImageTracked[image.DatabaseIndex] = true;
                         shouldImageBeTracked = true;
                     }
@@ -124,8 +123,8 @@ public class ImageTrackingController : MonoBehaviour
                         {
                             isImageTracked[image.DatabaseIndex] = true;
                             shouldImageBeTracked = true;
-                            printToScreenTop.text = "Welcome to the tutorial on binary math. Our candy cart is empty and providing no power to the station.\n";
-                            printToScreenBottom.text = "Please place a candy in the cart to turn it on and give power to the tutorial station.";
+                            instructions.UpdateText("Welcome to the tutorial on binary math.Our candy cart is empty and providing no power to the station.", true);
+                            instructions.UpdateText("Please place a candy in the cart to turn it on and give power to the tutorial station.", false);
                             //start tutorial lesson
                         }
                     }
@@ -254,9 +253,9 @@ public class ImageTrackingController : MonoBehaviour
             else //we are not tracking anything so reset app
             {
                 GetComponent<StartExperience>().enabled = true;
-                printToScreenTop.text = "Welcome to C-Spresso, an augmented reality textbook";
-                printToScreenBottom.text = "Please tap two fingers on the screen to begin image scanning";
-                FitToScanOverlay.SetActive(false);
+                instructions.UpdateText("Welcome to C-Spresso, an augmented reality textbook", true);
+                instructions.UpdateText("Please tap two fingers on the screen to begin image scanning", false);
+                FitToScanOverlay.TurnOff();
                 this.enabled = false;
                 return;
             }
@@ -278,7 +277,7 @@ public class ImageTrackingController : MonoBehaviour
         {
             if (potentallyTrackedImages.image.TrackingState == TrackingState.Tracking)
             {
-                FitToScanOverlay.SetActive(false);
+                FitToScanOverlay.TurnOff();
                 return;
             }
             /*
@@ -297,12 +296,12 @@ public class ImageTrackingController : MonoBehaviour
             */
         }
 
-        FitToScanOverlay.SetActive(true);
+        FitToScanOverlay.TurnOn();
     }
 
     private void IntroText()
     {
-        printToScreenTop.text = "Welcome to the AR experience of the Binary Math Lesson";
-        printToScreenBottom.text = "Please scan the station icon on the left page to start";
+        instructions.UpdateText("Welcome to the AR experience of the Binary Math Lesson", true);
+        instructions.UpdateText("Please scan the station icon on the left page to start", false);
     }
 }
