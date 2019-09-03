@@ -6,7 +6,7 @@ public class StartExperience : MonoBehaviour
 {
 
 
-    // Use this for initialization
+    // Use this for unit testing
     void Start () {
         //Invoke("UpdateTextTest", 2f);
 	}
@@ -16,13 +16,13 @@ public class StartExperience : MonoBehaviour
     {
 		if(Input.GetMouseButtonDown(1))
         {
-            GetComponent<ImageTrackingController>().enabled = true;
+            GetComponent<TrackingController>().enabled = true;
             this.enabled = false;
         }
 	}
 
     private void UpdateTextTest()
     {
-        GetComponent<InstructionalTextManager>().UpdateText("This is a test", true);
+        GetComponent<View>().UpdateText("This is a test", true);
     }
 }

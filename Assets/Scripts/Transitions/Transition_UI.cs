@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Transition_UI : MonoBehaviour, Transition
+public class Transition_UI : MonoBehaviour, ITransition
 {
     public RawImage[] rawImages;
     public Image[] images;

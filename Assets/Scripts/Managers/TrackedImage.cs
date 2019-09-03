@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Used to track elements on an AR book page
 /// </summary>
-public class TrackedImage : MonoBehaviour
+public class TrackedImage : Listener
 {
     /// <summary>
     /// The AugmentedImage to visualize.
@@ -26,26 +26,27 @@ public class TrackedImage : MonoBehaviour
     public int thisImageDatabaseElement;
 
     private GameObject currentElement;
-    private ImageTrackingController imageTrackingController;
+    private TrackingController imageTrackingController;
 
     public void Start()
     {
-        imageTrackingController = transform.parent.GetComponent<ImageTrackingController>();
+        imageTrackingController = transform.parent.GetComponent<TrackingController>();
         //Record which of the four interface elements this object is
         imageDatabaseElement[image.DatabaseIndex] = this;
         //Have this object remember which interface element it is
         thisImageDatabaseElement = image.DatabaseIndex;
         switch(thisImageDatabaseElement)
         {
-            case 0:
+            case 1:
+            case 7:
                 currentElement = Instantiate(tutorialStation, transform.position, Quaternion.identity);
-                currentElement.GetComponent<Transition>().TurnOn();
+                currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
-            case 5:
+            case 6:
                 currentElement = Instantiate(leverStatus, transform.position, Quaternion.identity);
-                currentElement.GetComponent<Transition>().TurnOn();
+                currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
         } 
@@ -53,7 +54,7 @@ public class TrackedImage : MonoBehaviour
 
     public void Remove()
     {
-        currentElement.GetComponent<Transition>().TurnOff();
+        currentElement.GetComponent<ITransition>().TurnOff();
         Destroy(gameObject, 2f);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Transition_3D : MonoBehaviour, Transition
+public class Transition_3D : MonoBehaviour, ITransition
 {
     private bool isOn;
     public float waitTime;

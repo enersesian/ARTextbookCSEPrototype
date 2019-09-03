@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Transition
+public interface ITransition
 {
     void TurnOn();
     void TurnOff();

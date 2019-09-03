@@ -19,9 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4691449294348788}
-  - component: {fileID: 114028350365860528}
-  - component: {fileID: 114639917554239922}
-  - component: {fileID: 114428608109156526}
+  - component: {fileID: 114245116623240426}
   m_Layer: 0
   m_Name: TrackedImage
   m_TagString: Untagged
@@ -42,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114028350365860528
+--- !u!114 &114245116623240426
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -53,41 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bc758cb5b83a244b1839b157aba198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ARBookPageElements:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  ARBookPageElements: []
   tutorialStation: {fileID: 1646401289346920, guid: 5701ae07317f0c9498ebb10abcf833fc,
     type: 2}
-  numberStation: {fileID: 1913458577490608, guid: 44fc55fa9a0e58f4ea1241d75dfbc464,
-    type: 2}
-  shapeStation: {fileID: 1240190398221920, guid: 5bd03d1405b4ca64497d43daa7b4f261,
-    type: 2}
-  colorStation: {fileID: 1461420902961632, guid: 65bef4d03d01d5b4081b8cfe86e0ede2,
-    type: 2}
+  numberStation: {fileID: 0}
+  shapeStation: {fileID: 0}
+  colorStation: {fileID: 0}
   leverStatus: {fileID: 1024771874914134, guid: daf0b6198440a6e46a5ddddcd72daf9b,
     type: 2}
   thisImageDatabaseElement: 0
---- !u!114 &114428608109156526
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571993969540566}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81ce5c3abc44c3f47add9ee5f122e13b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114639917554239922
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1571993969540566}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e5c4cdd9fc5c8e4ca5492d21411f0cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
