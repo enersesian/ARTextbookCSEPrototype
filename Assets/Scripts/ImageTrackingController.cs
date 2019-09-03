@@ -26,7 +26,7 @@ public class ImageTrackingController : MonoBehaviour
     /// <summary>
     /// The overlay containing the fit to scan user guide.
     /// </summary>
-    public UITransition FitToScanOverlay;
+    public Transition_UI FitToScanOverlay;
 
     private Dictionary<int, TrackedImage> m_TrackedImages
         = new Dictionary<int, TrackedImage>();
@@ -39,6 +39,7 @@ public class ImageTrackingController : MonoBehaviour
     private bool shouldImageBeTracked;
     private int resetCounter;
     private InstructionalTextManager instructions;
+    private float resetTimer;
 
     /// <summary>
     /// The Unity Awake() method.
@@ -53,6 +54,7 @@ public class ImageTrackingController : MonoBehaviour
 
     private void OnEnable()
     {
+        FitToScanOverlay.TurnOn(1f);
         IntroText();
     }
 
@@ -227,14 +229,39 @@ public class ImageTrackingController : MonoBehaviour
             }
         }
 
-        //User touched screen to reset tracking if issues or turning page in book
         if (Input.GetMouseButtonDown(1))
         {
+            foreach (var image in m_TempAugmentedImages)
+            {
+                currentlyTracked = null;
+                m_TrackedImages.TryGetValue(image.DatabaseIndex, out currentlyTracked);
+                if (currentlyTracked != null)
+                {
+                    m_TrackedImages.Remove(image.DatabaseIndex);
+                    currentlyTracked.Remove();
+                }
+            }
+            //IntroText();
+            for (int i = 0; i < isImageTracked.Length; i++) isImageTracked[i] = false;
+            instructions.UpdateText("Welcome to the homescreen of C-Spresso, an augmented reality textbook", true);
+            instructions.UpdateText("Please tap two fingers on the screen to begin image scanning", false);
+            FitToScanOverlay.TurnOff();
+            GetComponent<StartExperience>().enabled = true;
+            this.enabled = false;
+            return;
+        }
+
+        /*
+        //User touched screen to reset tracking if issues or turning page in book
+        resetTimer += Time.deltaTime; //avoid user spamming and time it with transitions
+        if (Input.GetMouseButtonDown(1) && resetTimer > 3f)
+        {
+            resetTimer = 0f;
             for (int i = 0; i < isImageTracked.Length; i++)
             {
                 if (isImageTracked[i]) resetCounter++; //if nothing is tracking then resetCounter == 0 and we reset app
             }
-            if(resetCounter > 0) //we are tracking something so go to app intro not reset app
+            if (resetCounter > 0) //we are tracking something so go to app intro not reset app
             {
                 foreach (var image in m_TempAugmentedImages)
                 {
@@ -243,7 +270,8 @@ public class ImageTrackingController : MonoBehaviour
                     if (currentlyTracked != null)
                     {
                         m_TrackedImages.Remove(image.DatabaseIndex);
-                        GameObject.Destroy(currentlyTracked.gameObject);
+                        currentlyTracked.Remove();
+                        //GameObject.Destroy(currentlyTracked.gameObject);
                     }
                 }
                 IntroText();
@@ -259,11 +287,11 @@ public class ImageTrackingController : MonoBehaviour
                 this.enabled = false;
                 return;
             }
-            
         }
+        */
 
         //rotate objects with finger swipe feature
-        if(Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0))
         {
             //printToScreen.text = Input.GetTouch(0).deltaPosition.x.ToString();
             for(int i = 0; i < transform.childCount; i++)
@@ -296,7 +324,7 @@ public class ImageTrackingController : MonoBehaviour
             */
         }
 
-        FitToScanOverlay.TurnOn();
+        //FitToScanOverlay.TurnOn(1f);
     }
 
     private void IntroText()

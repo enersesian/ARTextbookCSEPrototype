@@ -767,6 +767,52 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &1356870396
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4190264046290832, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646401289346920, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5701ae07317f0c9498ebb10abcf833fc, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &1622737808
 GameObject:
   m_ObjectHideFlags: 0
@@ -865,6 +911,7 @@ MonoBehaviour:
   - {fileID: 1622737810}
   images: []
   texts: []
+  waitTime: 1
 --- !u!1 &1791921639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1078,7 +1125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 354f1d95ed0ecf84aa12afe210f7742e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FitToScanOverlay: {fileID: 1622737813}
 --- !u!114 &2000013469
 MonoBehaviour:
   m_ObjectHideFlags: 0

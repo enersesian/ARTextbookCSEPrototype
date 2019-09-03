@@ -39,13 +39,21 @@ public class TrackedImage : MonoBehaviour
         {
             case 0:
                 currentElement = Instantiate(tutorialStation, transform.position, Quaternion.identity);
+                currentElement.GetComponent<Transition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
             case 5:
                 currentElement = Instantiate(leverStatus, transform.position, Quaternion.identity);
+                currentElement.GetComponent<Transition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
         } 
+    }
+
+    public void Remove()
+    {
+        currentElement.GetComponent<Transition>().TurnOff();
+        Destroy(gameObject, 2f);
     }
 }
