@@ -20,7 +20,7 @@ public class TrackedImage : Listener
     /// A world space UI to act as a three bit counter for number station.
     /// </summary>
     public GameObject[] ARBookPageElements;
-    public GameObject tutorialStation, numberStation, shapeStation, colorStation, leverStatus;
+    public GameObject eggy, tutorialStation, taskStation, numberStation, shapeStation, colorStation, leverStatus;
 
     public static TrackedImage[] imageDatabaseElement = new TrackedImage[7];
     public int thisImageDatabaseElement;
@@ -37,14 +37,38 @@ public class TrackedImage : Listener
         thisImageDatabaseElement = image.DatabaseIndex;
         switch(thisImageDatabaseElement)
         {
+            case 0:
+                currentElement = Instantiate(eggy, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
             case 1:
-            case 7:
-                currentElement = Instantiate(tutorialStation, transform.position, Quaternion.identity);
+                currentElement = Instantiate(tutorialStation, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
+            case 2:
+                currentElement = Instantiate(taskStation, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
+            case 3:
+                currentElement = Instantiate(numberStation, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
+            case 4:
+                currentElement = Instantiate(shapeStation, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
+            case 5:
+                currentElement = Instantiate(colorStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
-            case 6:
+            case 7:
                 currentElement = Instantiate(leverStatus, transform.position, Quaternion.identity);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;

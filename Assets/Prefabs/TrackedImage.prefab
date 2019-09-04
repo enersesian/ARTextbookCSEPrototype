@@ -52,11 +52,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ARBookPageElements: []
+  eggy: {fileID: 1275911409530888, guid: 2777f85e7899f5a4dbcd7ae86efb3c9d, type: 2}
   tutorialStation: {fileID: 1646401289346920, guid: 5701ae07317f0c9498ebb10abcf833fc,
     type: 2}
-  numberStation: {fileID: 0}
-  shapeStation: {fileID: 0}
-  colorStation: {fileID: 0}
+  taskStation: {fileID: 1918251740592040, guid: 403effea06b9b19429c9dedd40e1cd93,
+    type: 2}
+  numberStation: {fileID: 1913458577490608, guid: 44fc55fa9a0e58f4ea1241d75dfbc464,
+    type: 2}
+  shapeStation: {fileID: 1240190398221920, guid: 5bd03d1405b4ca64497d43daa7b4f261,
+    type: 2}
+  colorStation: {fileID: 1461420902961632, guid: 65bef4d03d01d5b4081b8cfe86e0ede2,
+    type: 2}
   leverStatus: {fileID: 1024771874914134, guid: daf0b6198440a6e46a5ddddcd72daf9b,
     type: 2}
   thisImageDatabaseElement: 0

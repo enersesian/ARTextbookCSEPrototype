@@ -72,7 +72,7 @@ public class AppManager : MonoBehaviour
                 return false;
 
             case AppManager.AppState.ScanningExercise: //Eggy index number
-                if (temp == 1) SetAppState(AppState.RotatingLesson, ActiveStation.None);
+                if (temp == 2) SetAppState(AppState.RotatingLesson, ActiveStation.None);
                 return true;
 
             case AppManager.AppState.RotatingLesson: //two finger touch
@@ -80,11 +80,11 @@ public class AppManager : MonoBehaviour
                 return false;
 
             case AppManager.AppState.ActiveTrackingLesson: //center cart index number
-                if (temp == 7) SetAppState(AppState.InactiveTrackingLesson, ActiveStation.None);
+                if (temp == 3) SetAppState(AppState.InactiveTrackingLesson, ActiveStation.None);
                 return true;
 
             case AppManager.AppState.InactiveTrackingLesson: //center cart lost tracking
-                if (temp == 0) SetAppState(AppState.TrackingExercise, ActiveStation.None);
+                if (temp == 5) SetAppState(AppState.TrackingExercise, ActiveStation.None);
                 return false;
 
             case AppManager.AppState.TrackingExercise: //two finger touch
@@ -112,7 +112,7 @@ public class AppManager : MonoBehaviour
                 return false;
 
             case AppManager.AppState.TaskStationScanning: //task station index number
-                if (temp == 1) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+                if (temp == 2) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
                 return true;
 
             default:
