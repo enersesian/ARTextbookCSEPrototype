@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class AppManager : MonoBehaviour
 {
 
-    public enum AppState { Welcome, ScanningLesson, ScanningExercise, RotatingLesson, ActiveTrackingLesson,
+    public enum AppState { Welcome, ResetInstructions, ScanningLesson, RotatingLesson, ActiveTrackingLesson,
         InactiveTrackingLesson, TrackingExercise, TutorialStationScanning, TutorialInteractiveScanning, TutorialExercise01, TutorialExercise02,
         TutorialExercise03, TaskStationScanning };
     public AppState currentAppState;
@@ -19,9 +19,9 @@ public class AppManager : MonoBehaviour
 
     private List<Listener> listeners = new List<Listener>();
 
-    private bool shouldRespondToUserInput = true;
+    private bool shouldRespondToUserInput = true, shouldImagebeTracked;
 
-    public Text testingText;
+    public Text textAppState, textTrackingState;
 
     private void Start() //called after awake to let listeners register first
     {
@@ -37,7 +37,7 @@ public class AppManager : MonoBehaviour
     {
         currentAppState = tempState;
         currentStation = tempStation;
-        testingText.text = currentAppState.ToString();
+        textAppState.text = currentAppState.ToString();
         foreach (Listener listenerObj in GetComponents<Listener>()) listenerObj.SetListenerState();
     }
 
@@ -60,64 +60,106 @@ public class AppManager : MonoBehaviour
 
     public bool InputDetected(int temp)
     {
-        testingText.text = temp.ToString();
+        //-1 two finger touch
+        //0 - 5 eggy, tutorial, task, number, shape, color stations
+        //6 - 8 left, center, right interactives
+        //9 eggy interactive lost tracking for AppManager.AppState.InactiveTrackingLesson
+        //10 tutorial station exercise, bit turns to 1
+        //11 tutorial station exercise, bit turns to 0
+
         switch (currentAppState)
         {
             case AppManager.AppState.Welcome: //two finger touch
+                if (temp == -1) SetAppState(AppState.ResetInstructions, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.ResetInstructions: //two finger touch
                 if (temp == -1) SetAppState(AppState.ScanningLesson, ActiveStation.None);
-                return false;
+                shouldImagebeTracked = false;
+                break;
 
-            case AppManager.AppState.ScanningLesson: //two finger touch
-                if (temp == -1) SetAppState(AppState.ScanningExercise, ActiveStation.None);
-                return false;
-
-            case AppManager.AppState.ScanningExercise: //Eggy index number
-                if (temp == 2) SetAppState(AppState.RotatingLesson, ActiveStation.None);
-                return true;
+            case AppManager.AppState.ScanningLesson: //Eggy index number
+                if (temp == 0)
+                {
+                    SetAppState(AppState.RotatingLesson, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.RotatingLesson: //two finger touch
                 if (temp == -1) SetAppState(AppState.ActiveTrackingLesson, ActiveStation.None);
-                return false;
+                shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.ActiveTrackingLesson: //center cart index number
-                if (temp == 3) SetAppState(AppState.InactiveTrackingLesson, ActiveStation.None);
-                return true;
+                if (temp == 4)
+                {
+                    SetAppState(AppState.InactiveTrackingLesson, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.InactiveTrackingLesson: //center cart lost tracking
-                if (temp == 5) SetAppState(AppState.TrackingExercise, ActiveStation.None);
-                return false;
+                if (temp == 9) SetAppState(AppState.TrackingExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TrackingExercise: //two finger touch
                 if (temp == -1) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
-                return false;
+                shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TutorialStationScanning: //tutorial station index number
-                if (temp == 1) SetAppState(AppState.TutorialInteractiveScanning, ActiveStation.None);
-                return true;
+                if (temp == 1)
+                {
+                    SetAppState(AppState.TutorialInteractiveScanning, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TutorialInteractiveScanning: //center cart index number
-                if (temp == 1) SetAppState(AppState.TutorialExercise01, ActiveStation.None);
-                return true;
+                if (temp == 4)
+                {
+                    SetAppState(AppState.TutorialExercise01, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TutorialExercise01: //center cart tracking becomes inactive, ie bit turns to 1
-                if (temp == -1) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
-                return false;
+                if (temp == 10) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TutorialExercise02: //center cart tracking becomes active, ie bit turns to 0
-                if (temp == -1) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
-                return false;
+                if (temp == 11) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TutorialExercise03: //two finger touch
                 if (temp == -1) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
-                return false;
+                shouldImagebeTracked = false;
+                break;
 
             case AppManager.AppState.TaskStationScanning: //task station index number
-                if (temp == 2) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
-                return true;
+                if (temp == 2)
+                {
+                    SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
 
             default:
-                return false;
+                shouldImagebeTracked = false;
+                break;
         }
+        textTrackingState.text = temp.ToString() + " " + shouldImagebeTracked.ToString();
+        return shouldImagebeTracked;
     }
 
     public void UserInputDetected()

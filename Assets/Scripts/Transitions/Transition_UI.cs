@@ -11,12 +11,14 @@ public class Transition_UI : MonoBehaviour, ITransition
     public float waitTime;
     private bool isOn;
 
+    public float imageAlpha;
+
     public void TurnOff()
     {
         if(isOn)
         {
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, false, 0.5f));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, false, 1f));
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, false, imageAlpha));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, false, imageAlpha));
             foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, false, 1f));
             isOn = false;
         }
@@ -31,8 +33,8 @@ public class Transition_UI : MonoBehaviour, ITransition
     {
         if(!isOn)
         {
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, true, 0.5f));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, true, 1f));
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, true, imageAlpha));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, true, imageAlpha));
             foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, true, 1f));
             isOn = true;
         }

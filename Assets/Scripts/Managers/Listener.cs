@@ -5,6 +5,7 @@ using UnityEngine;
 abstract public class Listener : MonoBehaviour
 {
     static protected AppManager gameManager;
+
     public virtual void SetListenerState() { }
 
     protected void Awake()

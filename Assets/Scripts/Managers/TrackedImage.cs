@@ -20,7 +20,7 @@ public class TrackedImage : Listener
     /// A world space UI to act as a three bit counter for number station.
     /// </summary>
     public GameObject[] ARBookPageElements;
-    public GameObject eggy, tutorialStation, taskStation, numberStation, shapeStation, colorStation, leverStatus;
+    public GameObject eggy, eggyInteractive, tutorialInteractive, centerInteractive, tutorialStation, taskStation, numberStation, shapeStation, colorStation;
 
     public static TrackedImage[] imageDatabaseElement = new TrackedImage[7];
     public int thisImageDatabaseElement;
@@ -58,7 +58,11 @@ public class TrackedImage : Listener
                 currentElement.transform.parent = transform;
                 break;
             case 4:
-                currentElement = Instantiate(shapeStation, transform.position, transform.rotation);
+                if(imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.InactiveTrackingLesson)
+                    currentElement = Instantiate(eggyInteractive, transform.position, transform.rotation); //shapeStation
+                else if(imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.TutorialExercise01)
+                    currentElement = Instantiate(tutorialInteractive, transform.position, transform.rotation); //shapeStation
+                else currentElement = Instantiate(centerInteractive, transform.position, transform.rotation); //shapeStation
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
@@ -69,7 +73,7 @@ public class TrackedImage : Listener
                 break;
 
             case 7:
-                currentElement = Instantiate(leverStatus, transform.position, Quaternion.identity);
+                currentElement = Instantiate(centerInteractive, transform.position, Quaternion.identity);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;

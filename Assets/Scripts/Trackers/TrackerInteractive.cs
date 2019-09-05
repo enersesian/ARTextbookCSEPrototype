@@ -57,14 +57,14 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (temp)//currentElementIsBitSetToOne)
         {
-            transform.GetChild(0).GetComponent<Text>().text = "0";
-            transform.GetChild(1).GetComponent<Text>().text = "Off";
+            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "0";
+            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "Off";
             currentElementIsBitSetToOne = false;
         }
         else
         {
-            transform.GetChild(0).GetComponent<Text>().text = "1";
-            transform.GetChild(1).GetComponent<Text>().text = "On";
+            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "1";
+            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "On";
             currentElementIsBitSetToOne = true;
         }
     }
@@ -73,11 +73,12 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (isReady)
         {
-            transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, 0.3f);
+            if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
         }
         else
         {
-            transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, 0.3f);
+            if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
+            if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking();
         }
     }
 }

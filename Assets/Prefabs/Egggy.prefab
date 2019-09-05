@@ -19,9 +19,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4633215391289308}
+  - component: {fileID: 114583148064675776}
   m_Layer: 0
   m_Name: Egggy
-  m_TagString: Untagged
+  m_TagString: 3DModel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +51,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996212325916084}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0.0044, y: 0.0731, z: 0}
+  m_LocalPosition: {x: 0.0044, y: 0.0333, z: 0}
   m_LocalScale: {x: 0.0023746344, y: 0.0023746344, z: 0.0023746344}
   m_Children: []
   m_Father: {fileID: 4633215391289308}
@@ -112,3 +113,15 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996212325916084}
   m_Mesh: {fileID: 4300000, guid: 03c00d0261d06464cb0618bc9c8de6a2, type: 3}
+--- !u!114 &114583148064675776
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275911409530888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663687a06adb22a4fb23a9c68284281b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitTime: 2
