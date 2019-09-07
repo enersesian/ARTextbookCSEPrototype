@@ -15,6 +15,7 @@ public class TrackedImage : Listener
     /// The AugmentedImage to visualize.
     /// </summary>
     public AugmentedImage image;
+    public Anchor anchor;
 
     /// <summary>
     /// A world space UI to act as a three bit counter for number station.

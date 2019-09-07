@@ -31,7 +31,7 @@ public class View : Listener
             case AppManager.AppState.ScanningLesson: //lesson on how to recognize scannable images
                 UpdateText("Notice the scanning frame has appeared and it tells you that the phone is actively scanning.", true);
                 UpdateText("Now find the Eggy image and align his image's frame with your scanning frame.", false);
-                FitToScanOverlay.TurnOn(5f);
+                FitToScanOverlay.TurnOn(4f);
                 break;
 
             case AppManager.AppState.RotatingLesson: //lesson on how to rotate trackers to align them with the images
@@ -41,7 +41,7 @@ public class View : Listener
                 break;
 
             case AppManager.AppState.ActiveTrackingLesson: //lesson on how finding and tracking interactives
-                FitToScanOverlay.TurnOn(5f);
+                FitToScanOverlay.TurnOn(4f);
                 UpdateText("Ah, that was fun! Remember, you can rotate any 3D model to enjoy it from any angle.", true);
                 UpdateText("Now notice the scanner is active again. Please scan the image below me to activate it.", false);
                 break;
@@ -59,7 +59,7 @@ public class View : Listener
                 break;
 
             case AppManager.AppState.TutorialStationScanning: //lesson on how to find the tutorial station
-                FitToScanOverlay.TurnOn(5f);
+                FitToScanOverlay.TurnOn(4f);
                 UpdateText("That image is a bit, which is a counting unit for computers, like digits are counting units for humans.", true);
                 UpdateText("When you are ready to learn more about bits, go scan the tutorial station on the right page.", false);
                 break;
@@ -71,7 +71,7 @@ public class View : Listener
                 break;
 
             case AppManager.AppState.TutorialExplanation: //lesson on how to find the tutorial interaction
-                FitToScanOverlay.TurnOn(5f);
+                FitToScanOverlay.TurnOn(4f);
                 UpdateText("When a bit is green it is turned on, and when a bit is red it is turned off. Lets turn turning a bit on and off.", true);
                 UpdateText("When ready, scan the image below it to begin the exercise. You will use a cookie to turn the bit on and off.", false);
                 break;
@@ -93,7 +93,7 @@ public class View : Listener
                 break;
                 //Get to here for tonight, build the on/off into the tutorial station
             case AppManager.AppState.TaskStationScanning: //lesson on how to find the task station
-                FitToScanOverlay.TurnOn();
+                FitToScanOverlay.TurnOn(4f);
                 UpdateText("Let's turn the page and move to the task station. There you will learn to interact with two bits.", true);
                 UpdateText("One bit will turn the station on and the next bit will give you a task.", false);
                 break;

@@ -68,11 +68,19 @@ public class TrackingController : Listener
         //Reset app to welcome screen
         if (Input.GetMouseButtonDown(2))
         {
+            /*
             shouldControllerBeTracking = false;
             removeExistingContent = true;
             remove3DContent = true;
             gameManager.StartApp();
             return;
+            */
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).GetComponent<TrackedImage>().anchor = transform.GetChild(i).GetComponent<TrackedImage>().image.CreateAnchor(transform.GetChild(i).GetComponent<TrackedImage>().image.CenterPose);
+                transform.GetChild(i).position = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.position;
+                transform.GetChild(i).rotation = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.rotation;
+            }
         }
 
         // Exit the app when the 'back' button is pressed.
@@ -130,6 +138,7 @@ public class TrackingController : Listener
                         currentlyTracked = (TrackedImage)Instantiate(
                             TrackedImagePrefab, anchor.transform);
                         currentlyTracked.image = image;
+                        currentlyTracked.anchor = anchor;
                         //currentlyTracked.transform.rotation = Quaternion.identity;
                         currentlyTracked.transform.parent = this.transform;
                         m_TrackedImages.Add(image.DatabaseIndex, currentlyTracked);
