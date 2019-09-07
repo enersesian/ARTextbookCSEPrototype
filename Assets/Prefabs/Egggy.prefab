@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4633215391289308}
   - component: {fileID: 114583148064675776}
+  - component: {fileID: 114774970486663336}
   m_Layer: 0
   m_Name: Egggy
   m_TagString: 3DModel
@@ -51,8 +52,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1996212325916084}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0.0044, y: 0.0333, z: 0}
-  m_LocalScale: {x: 0.0023746344, y: 0.0023746344, z: 0.0023746344}
+  m_LocalPosition: {x: 0.0044, y: -0.0002, z: 0.0000000086456}
+  m_LocalScale: {x: 0.0013836524, y: 0.0013836524, z: 0.0013836524}
   m_Children: []
   m_Father: {fileID: 4633215391289308}
   m_RootOrder: 0
@@ -86,7 +87,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 03c00d0261d06464cb0618bc9c8de6a2, type: 3}
+  - {fileID: 2100000, guid: bac9620ac6052d144805f72ac93b9b29, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -125,3 +126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 2
+--- !u!114 &114774970486663336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1275911409530888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f5c5593efbb304b91668523ace1697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

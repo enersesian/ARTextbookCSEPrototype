@@ -30,8 +30,8 @@ public class View : Listener
 
             case AppManager.AppState.ScanningLesson: //lesson on how to recognize scannable images
                 UpdateText("Notice the scanning frame has appeared and it tells you that the phone is actively scanning.", true);
-                UpdateText("Now find the Eggy image and hold align his image's image with your scanning frame.", false);
-                FitToScanOverlay.TurnOn();
+                UpdateText("Now find the Eggy image and align his image's frame with your scanning frame.", false);
+                FitToScanOverlay.TurnOn(5f);
                 break;
 
             case AppManager.AppState.RotatingLesson: //lesson on how to rotate trackers to align them with the images
@@ -41,38 +41,45 @@ public class View : Listener
                 break;
 
             case AppManager.AppState.ActiveTrackingLesson: //lesson on how finding and tracking interactives
-                FitToScanOverlay.TurnOn();
+                FitToScanOverlay.TurnOn(5f);
                 UpdateText("Ah, that was fun! Remember, you can rotate any 3D model to enjoy it from any angle.", true);
-                UpdateText("Now notice the scanner is active again. Please scan the image below me to activate an interactive.", false);
+                UpdateText("Now notice the scanner is active again. Please scan the image below me to activate it.", false);
                 break;
 
             case AppManager.AppState.InactiveTrackingLesson: //lesson on how finding and tracking interactives
                 FitToScanOverlay.TurnOff();
-                UpdateText("Great! Notice that the interactive is glowing green. That means you can interact with it.", true);
-                UpdateText("Now pull back from the interactive until it grows red. That means you are too far to interact with it.", false);
+                UpdateText("Great! Notice that the image is glowing green. That means you are tracking it and can interact with it.", true);
+                UpdateText("Now pull back from the image until it grows red. That means you are too far to interact with it.", false);
                 break;
 
             case AppManager.AppState.TrackingExercise: //lesson on how finding and tracking interactives
                 FitToScanOverlay.TurnOff();
-                UpdateText("Great! Now practice moving back and forth to make the interactive interactable and not interactable.", true);
-                UpdateText("You will need a good feel for these distances. When done, please tap with two fingers.", false);
+                UpdateText("Now try tracking both of us. I will glow green and red now to let you know when you are tracking me.", true);
+                UpdateText("Now practice moving back and forth to get both of us green. When done, please tap with two fingers.", false);
                 break;
 
             case AppManager.AppState.TutorialStationScanning: //lesson on how to find the tutorial station
-                FitToScanOverlay.TurnOn();
-                UpdateText("Great! Now let's go scan the tutorial station on the right page and learn about bits.", true);
-                UpdateText("Bits are the basic counting unit for computers, just like digits are the basic counting unit for humans.", false);
+                FitToScanOverlay.TurnOn(5f);
+                UpdateText("That image is a bit, which is a counting unit for computers, like digits are counting units for humans.", true);
+                UpdateText("When you are ready to learn more about bits, go scan the tutorial station on the right page.", false);
                 break;
 
             case AppManager.AppState.TutorialInteractiveScanning: //lesson on how to find the tutorial interaction
                 FitToScanOverlay.TurnOff();
-                UpdateText("This is the tutorial station. Remember you can rotate it to view from any angle.", true);
-                UpdateText("When ready, please scan the interactive image below it to begin exercise.", false);
+                UpdateText("This is the tutorial station. Remember you can rotate it for viewing. I am also here to show you if its tracking.", true);
+                UpdateText("Remember to make sure I am green when trying to interact with a bit. Tap two fingers to continue.", false);
+                break;
+
+            case AppManager.AppState.TutorialExplanation: //lesson on how to find the tutorial interaction
+                FitToScanOverlay.TurnOn(5f);
+                UpdateText("When a bit is green it is turned on, and when a bit is red it is turned off. Lets turn turning a bit on and off.", true);
+                UpdateText("When ready, scan the image below it to begin the exercise. You will use a cookie to turn the bit on and off.", false);
                 break;
 
             case AppManager.AppState.TutorialExercise01: //lesson on how to turn a bit on with a piece of candy
+                FitToScanOverlay.TurnOff();
                 UpdateText("Notice above the colored interactive area now sits a zero. That is a bit, and it is currently set to 0.", true);
-                UpdateText("Bits can be set to 0 or 1, which is only two states. Let's change the bit's state by placing a candy on the interaction area.", false); // //Digits can be set to one of ten states: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+                UpdateText("Bits can be set to 0 or 1, which is only two states. Let's change the bit's state by placing a cookie on it.", false); // //Digits can be set to one of ten states: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
                 break;
 
             case AppManager.AppState.TutorialExercise02: //lesson on how to turn a bit off with a piece of candy

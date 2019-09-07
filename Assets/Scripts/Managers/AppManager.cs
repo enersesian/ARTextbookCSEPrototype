@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class AppManager : MonoBehaviour
 {
-
     public enum AppState { Welcome, ResetInstructions, ScanningLesson, RotatingLesson, ActiveTrackingLesson,
-        InactiveTrackingLesson, TrackingExercise, TutorialStationScanning, TutorialInteractiveScanning, TutorialExercise01, TutorialExercise02,
-        TutorialExercise03, TaskStationScanning };
+        InactiveTrackingLesson, TrackingExercise, TutorialStationScanning, TutorialInteractiveScanning, TutorialExplanation,
+        TutorialExercise01, TutorialExercise02, TutorialExercise03, TaskStationScanning };
     public AppState currentAppState;
 
     public enum ActiveStation { Task, Number, Shape, Color, None };
@@ -30,7 +29,7 @@ public class AppManager : MonoBehaviour
 
     public void StartApp() //also used with reset input
     {
-        SetAppState(AppState.Welcome, ActiveStation.None);
+        SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
     }
 
     private void SetAppState(AppState tempState, ActiveStation tempStation)
@@ -122,6 +121,11 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.TutorialInteractiveScanning: //center cart index number
+                if (temp == -1) SetAppState(AppState.TutorialExplanation, ActiveStation.None);
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.TutorialExplanation: //lesson on how to find the tutorial interaction
                 if (temp == 4)
                 {
                     SetAppState(AppState.TutorialExercise01, ActiveStation.None);

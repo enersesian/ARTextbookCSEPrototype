@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4537213537959958}
   - component: {fileID: 114481271800151774}
+  - component: {fileID: 114874752860020034}
+  - component: {fileID: 114279697890266740}
   m_Layer: 0
   m_Name: Number machine
   m_TagString: 3DModel
@@ -113,6 +115,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1919219410572820}
   m_Mesh: {fileID: 4300000, guid: fb7c39858468aaa40bd8c33c1bfa9def, type: 3}
+--- !u!114 &114279697890266740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913458577490608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f5c5593efbb304b91668523ace1697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114481271800151774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,3 +138,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 2
+--- !u!114 &114874752860020034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913458577490608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5c4cdd9fc5c8e4ca5492d21411f0cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

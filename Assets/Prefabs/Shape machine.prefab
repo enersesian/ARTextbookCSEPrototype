@@ -37,6 +37,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4811946768711544}
   - component: {fileID: 114594312437229144}
+  - component: {fileID: 114597536329993290}
+  - component: {fileID: 114389134865224340}
   m_Layer: 0
   m_Name: Shape machine
   m_TagString: 3DModel
@@ -113,6 +115,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1031890543557932}
   m_Mesh: {fileID: 4300000, guid: 243a93f03d932d94aa1ae7160cb0a868, type: 3}
+--- !u!114 &114389134865224340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240190398221920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f5c5593efbb304b91668523ace1697, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114594312437229144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -125,3 +138,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waitTime: 2
+--- !u!114 &114597536329993290
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240190398221920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e5c4cdd9fc5c8e4ca5492d21411f0cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

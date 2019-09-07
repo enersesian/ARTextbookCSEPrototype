@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class TrackerBase : MonoBehaviour
 {
-    private bool[] interfaceBits = new bool[3];
+    public bool[] interfaceBits;
     private TrackedImage thisTrackedImage;
     private bool coolDownTime = true;
     private int stationCounter;
@@ -16,9 +16,13 @@ public class TrackerBase : MonoBehaviour
     void Start()
     {
         thisTrackedImage = GetComponent<TrackedImage>();
-        for(int i = 0; i < 3; i++)
+        if (gameObject.name == "Task Machine(Clone)") interfaceBits = new bool[2];
+        if (gameObject.name == "Number machine(Clone)") interfaceBits = new bool[4];
+        if (gameObject.name == "Shape machine(Clone)") interfaceBits = new bool[3];
+        if (gameObject.name == "Color machine(Clone)") interfaceBits = new bool[4];
+        for (int i = 0; i < interfaceBits.Length; i++)
         {
-            interfaceBits[i] = true;
+            //interfaceBits[i] = true;
         }
     }
 
@@ -36,5 +40,14 @@ public class TrackerBase : MonoBehaviour
     private void ResetCoolDownTimer()
     {
         coolDownTime = true;
+    }
+
+    public bool TrackingNotice(string trackerName, bool isTracking)
+    {
+        if (trackerName == "eggy") interfaceBits[0] = isTracking;
+        if (trackerName == "TutorialInteractive(Clone)") interfaceBits[1] = isTracking;
+
+        if (interfaceBits[0]) return true;
+        else return false;
     }
 }

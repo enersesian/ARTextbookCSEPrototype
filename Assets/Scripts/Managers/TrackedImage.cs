@@ -39,11 +39,12 @@ public class TrackedImage : Listener
         {
             case 0:
                 currentElement = Instantiate(eggy, transform.position, transform.rotation);
+                currentElement.GetComponent<TrackerEggy>().enabled = false;
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
             case 1:
-                currentElement = Instantiate(tutorialStation, transform.position, transform.rotation);
+                currentElement = Instantiate(taskStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;

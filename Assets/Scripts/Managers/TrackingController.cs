@@ -166,27 +166,38 @@ public class TrackingController : Listener
             case AppManager.AppState.Welcome: //lesson on using two finger tap to move through app states
             case AppManager.AppState.ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
             case AppManager.AppState.RotatingLesson: //lesson on how to rotate trackers to align them with the images
-            case AppManager.AppState.TrackingExercise: //lesson on how finding and tracking interactives
+            case AppManager.AppState.TutorialInteractiveScanning: //lesson on how to find the tutorial interaction
+            
             case AppManager.AppState.TutorialExercise03: //confirm moving from tutorial to task station
             default:
+                shouldControllerBeTracking = false;
+                break;
+
+            case AppManager.AppState.TrackingExercise: //lesson on how finding and tracking interactives
+                transform.GetChild(0).GetChild(0).GetComponent<TrackerEggy>().enabled = true;
                 shouldControllerBeTracking = false;
                 break;
 
             case AppManager.AppState.ScanningLesson: //lesson on how to recognize scannable images
             case AppManager.AppState.ActiveTrackingLesson: //lesson on how finding and tracking interactives
             case AppManager.AppState.InactiveTrackingLesson: //lesson on how finding and tracking interactives
-            case AppManager.AppState.TutorialInteractiveScanning: //lesson on how to find the tutorial interaction
+            case AppManager.AppState.TutorialExplanation:
             case AppManager.AppState.TutorialExercise01: //lesson on how to turn a bit on with a piece of candy
             case AppManager.AppState.TutorialExercise02: //lesson on how to turn a bit off with a piece of candy
             case AppManager.AppState.TaskStationScanning: //lesson on how to find the task station
-                shouldControllerBeTracking = true;
+                Invoke("TurnOnTracking", 5f);
                 break;
 
             case AppManager.AppState.TutorialStationScanning: //lesson on how to find the tutorial station
                 removeExistingContent = true;
-                remove3DContent = false;
-                shouldControllerBeTracking = true;
+                remove3DContent = true;
+                Invoke("TurnOnTracking", 5f);
                 break;
         }
+    }
+
+    private void TurnOnTracking()
+    {
+        shouldControllerBeTracking = true;
     }
 }

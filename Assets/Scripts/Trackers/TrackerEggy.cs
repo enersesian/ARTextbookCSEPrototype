@@ -6,7 +6,7 @@ using GoogleARCoreInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TrackerInteractive : MonoBehaviour
+public class TrackerEggy : MonoBehaviour
 {
     private TrackedImage thisTrackedImage;
     private TrackerBase mainTracker;
@@ -17,9 +17,7 @@ public class TrackerInteractive : MonoBehaviour
     private void Start()
     {
         thisTrackedImage = transform.parent.GetComponent<TrackedImage>();
-        mainTracker = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<TrackerBase>();
-        if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
-        if (transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
+        mainTracker = GetComponent<TrackerBase>();
     }
 
     public void Update()
@@ -34,8 +32,8 @@ public class TrackerInteractive : MonoBehaviour
         {
             isFullTracked = true;
             InteractionNotice(true);
-            if(mainTracker.TrackingNotice(gameObject.name, true)) SetBit(true);
-            //transform.GetChild(0).GetComponent<Text>().text = mainTracker.TrackingNotice(gameObject.name, true).ToString();
+            mainTracker.TrackingNotice("eggy", true);
+            //SetBit(true);
         }
 
         //user placed down the peppermint token and covered the tracked image
@@ -46,10 +44,9 @@ public class TrackerInteractive : MonoBehaviour
             {
                 //SetBit(false);
                 isFullTracked = false;
-                InteractionNotice(false);
-                if (mainTracker.TrackingNotice(gameObject.name, false)) SetBit(false);
-                //transform.GetChild(0).GetComponent<Text>().text = mainTracker.TrackingNotice(gameObject.name, false).ToString();
                 timeSinceFullTrackingMethod = 0f;
+                InteractionNotice(false);
+                mainTracker.TrackingNotice("eggy", false);
             }
         }
         else
@@ -63,14 +60,14 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (temp)//currentElementIsBitSetToOne)
         {
-            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "1";
-            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
+            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "0";
+            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "Off";
             currentElementIsBitSetToOne = false;
         }
         else
         {
-            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "0";
-            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
+            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "1";
+            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "On";
             currentElementIsBitSetToOne = true;
         }
     }
@@ -79,12 +76,14 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (isReady)
         {
-            if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
+            //if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
+            transform.GetChild(0).GetComponent<Renderer>().material.color = Color.green;
         }
         else
         {
-            if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
-            if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking();
+            //if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
+            //if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking();
+            transform.GetChild(0).GetComponent<Renderer>().material.color = Color.red;
         }
     }
 }
