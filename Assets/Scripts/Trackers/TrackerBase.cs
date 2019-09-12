@@ -47,7 +47,12 @@ public class TrackerBase : MonoBehaviour
         if (trackerName == "eggy") interfaceBits[0] = isTracking;
         if (trackerName == "TutorialInteractive(Clone)") interfaceBits[1] = isTracking;
 
-        if (interfaceBits[0]) return true;
+        if (interfaceBits[0] && trackerName == "TutorialInteractive(Clone)")
+        {
+            if(isTracking) transform.parent.parent.GetComponent<AppManager>().InputDetected(11);
+            else transform.parent.parent.GetComponent<AppManager>().InputDetected(10);
+            return true;
+        }
         else return false;
     }
 }

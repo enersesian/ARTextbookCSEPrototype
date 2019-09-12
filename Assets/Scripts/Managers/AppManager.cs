@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class AppManager : MonoBehaviour
 {
-    public enum AppState { Welcome, ResetInstructions, ScanningLesson, RotatingLesson, ActiveTrackingLesson,
+    public enum AppState { Welcome, ResetInstructions, ScanningLesson, RotatingLesson, ActiveTrackingLesson, ActiveTrackingLesson01, ActiveTrackingLesson02, ActiveTrackingLesson03,
         InactiveTrackingLesson, TrackingExercise, TutorialStationScanning, TutorialInteractiveScanning, TutorialExplanation,
-        TutorialExercise01, TutorialExercise02, TutorialExercise03, TaskStationScanning };
+        TutorialExercise01, TutorialExercise02, TutorialExercise03, NumberStationScanning };
     public AppState currentAppState;
 
     public enum ActiveStation { Task, Number, Shape, Color, None };
@@ -29,7 +29,8 @@ public class AppManager : MonoBehaviour
 
     public void StartApp() //also used with reset input
     {
-        SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+        SetAppState(AppState.Welcome, ActiveStation.None);
+        //SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
     }
 
     private void SetAppState(AppState tempState, ActiveStation tempStation)
@@ -79,7 +80,7 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.ScanningLesson: //Eggy index number
-                if (temp == 0)
+                if (temp == 3)
                 {
                     SetAppState(AppState.RotatingLesson, ActiveStation.None);
                     shouldImagebeTracked = true;
@@ -88,12 +89,30 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.RotatingLesson: //two finger touch
-                if (temp == -1) SetAppState(AppState.ActiveTrackingLesson, ActiveStation.None);
+                if (temp == -1) SetAppState(AppState.ActiveTrackingLesson01, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.ActiveTrackingLesson: //center cart index number
-                if (temp == 4)
+            case AppManager.AppState.ActiveTrackingLesson01: //center cart index number
+                if (temp == 7)
+                {
+                    SetAppState(AppState.ActiveTrackingLesson02, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.ActiveTrackingLesson02: //center cart index number
+                if (temp == 6)
+                {
+                    SetAppState(AppState.ActiveTrackingLesson03, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.ActiveTrackingLesson03: //center cart index number
+                if (temp == 8)
                 {
                     SetAppState(AppState.InactiveTrackingLesson, ActiveStation.None);
                     shouldImagebeTracked = true;
@@ -102,7 +121,7 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.InactiveTrackingLesson: //center cart lost tracking
-                if (temp == 9) SetAppState(AppState.TrackingExercise, ActiveStation.None);
+                if (temp == -1) SetAppState(AppState.TrackingExercise, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
@@ -126,7 +145,7 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.TutorialExplanation: //lesson on how to find the tutorial interaction
-                if (temp == 4)
+                if (temp == 7)
                 {
                     SetAppState(AppState.TutorialExercise01, ActiveStation.None);
                     shouldImagebeTracked = true;
@@ -134,22 +153,22 @@ public class AppManager : MonoBehaviour
                 else shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.TutorialExercise01: //center cart tracking becomes inactive, ie bit turns to 1
-                if (temp == 10) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+            case AppManager.AppState.TutorialExercise01: //center cart tracking becomes inactive, ie bit turns to 0
+                if (temp == 10) SetAppState(AppState.TutorialExercise02, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.TutorialExercise02: //center cart tracking becomes active, ie bit turns to 0
-                if (temp == 11) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+            case AppManager.AppState.TutorialExercise02: //center cart tracking becomes active, ie bit turns to 1
+                if (temp == 11) SetAppState(AppState.TutorialExercise03, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
             case AppManager.AppState.TutorialExercise03: //two finger touch
-                if (temp == -1) SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+                if (temp == -1) SetAppState(AppState.NumberStationScanning, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.TaskStationScanning: //task station index number
+            case AppManager.AppState.NumberStationScanning: //task station index number
                 if (temp == 2)
                 {
                     SetAppState(AppState.TutorialStationScanning, ActiveStation.None);

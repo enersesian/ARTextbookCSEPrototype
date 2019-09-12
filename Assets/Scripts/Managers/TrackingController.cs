@@ -121,6 +121,32 @@ public class TrackingController : Listener
         }
         else if (shouldControllerBeTracking)
         {
+            if(Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                shouldImageBeTracked = gameManager.InputDetected(0);
+                if (shouldImageBeTracked)
+                {
+                    currentlyTracked = (TrackedImage)Instantiate(
+                        TrackedImagePrefab, this.transform);
+                    currentlyTracked.transform.parent = this.transform;
+                    m_TrackedImages.Add(0, currentlyTracked);
+                    shouldImageBeTracked = false;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                shouldImageBeTracked = gameManager.InputDetected(7);
+                if (shouldImageBeTracked)
+                {
+                    currentlyTracked = (TrackedImage)Instantiate(
+                        TrackedImagePrefab, this.transform);
+                    currentlyTracked.transform.parent = this.transform;
+                    m_TrackedImages.Add(7, currentlyTracked);
+                    shouldImageBeTracked = false;
+                }
+            }
+
             // Create an anchor and a model for updated augmented images that are tracking and do
             // not previously have a model. Remove models for stopped images.
             foreach (var image in m_TempAugmentedImages)
@@ -188,12 +214,14 @@ public class TrackingController : Listener
                 break;
 
             case AppManager.AppState.ScanningLesson: //lesson on how to recognize scannable images
-            case AppManager.AppState.ActiveTrackingLesson: //lesson on how finding and tracking interactives
+            case AppManager.AppState.ActiveTrackingLesson01: //lesson on how finding and tracking interactives
+            case AppManager.AppState.ActiveTrackingLesson02: //lesson on how finding and tracking interactives
+            case AppManager.AppState.ActiveTrackingLesson03: //lesson on how finding and tracking interactives
             case AppManager.AppState.InactiveTrackingLesson: //lesson on how finding and tracking interactives
             case AppManager.AppState.TutorialExplanation:
             case AppManager.AppState.TutorialExercise01: //lesson on how to turn a bit on with a piece of candy
             case AppManager.AppState.TutorialExercise02: //lesson on how to turn a bit off with a piece of candy
-            case AppManager.AppState.TaskStationScanning: //lesson on how to find the task station
+            case AppManager.AppState.NumberStationScanning: //lesson on how to find the task station
                 Invoke("TurnOnTracking", 5f);
                 break;
 
