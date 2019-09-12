@@ -20,7 +20,8 @@ public class TrackerInteractive : MonoBehaviour
         thisTrackedImage = transform.parent.GetComponent<TrackedImage>();
         mainTracker = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<TrackerBase>();
         if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
-        if (transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
+        if (transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "";
+        if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "";
         birthTime = Time.time;
     }
 
@@ -31,7 +32,7 @@ public class TrackerInteractive : MonoBehaviour
             //foreach (var element in thisTrackedImage.ARBookPageElements) element.SetActive(false);
             return;
         }
-        if (Time.time < birthTime + 5f) return; //give a 10 second window before it starts pinging away
+        if (Time.time < birthTime + 5f) return; //give a 5 second window before it starts pinging away
 
         if (thisTrackedImage.image.TrackingMethod == AugmentedImageTrackingMethod.FullTracking)
         {
@@ -66,14 +67,16 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (temp)//currentElementIsBitSetToOne)
         {
-            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "1";
-            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
+            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "1";
+            if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "1";
+            if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
             currentElementIsBitSetToOne = false;
         }
         else
         {
-            if(transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "0";
-            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
+            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "0";
+            if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "0";
+            if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
             currentElementIsBitSetToOne = true;
         }
     }
@@ -82,11 +85,11 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (isReady)
         {
-            if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
+            if(transform.GetChild(1).GetComponent<Image>()) transform.GetChild(1).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(1).GetComponent<Image>().color.a);
         }
         else
         {
-            if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
+            if(transform.GetChild(1).GetComponent<Image>()) transform.GetChild(1).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(1).GetComponent<Image>().color.a);
             if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking();
         }
     }

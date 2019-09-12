@@ -198,34 +198,31 @@ public class TrackingController : Listener
     {
         switch (gameManager.currentAppState)
         {
-            case AppManager.AppState.Welcome: //lesson on using two finger tap to move through app states
-            case AppManager.AppState.ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
-            case AppManager.AppState.RotatingLesson: //lesson on how to rotate trackers to align them with the images
-            case AppManager.AppState.TutorialInteractiveScanning: //lesson on how to find the tutorial interaction
-            
-            case AppManager.AppState.TutorialExercise03: //confirm moving from tutorial to task station
+            case AppManager.AppState.Eggy01Welcome: //lesson on using two finger tap to move through app states
+            case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
+            case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
+            case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
+            case AppManager.AppState.Tutorial06GoblinPractice: //confirm moving from tutorial to task station
             default:
                 shouldControllerBeTracking = false;
                 break;
 
-            case AppManager.AppState.TrackingExercise: //lesson on how finding and tracking interactives
+            case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
                 transform.GetChild(0).GetChild(0).GetComponent<TrackerEggy>().enabled = true;
                 shouldControllerBeTracking = false;
                 break;
 
-            case AppManager.AppState.ScanningLesson: //lesson on how to recognize scannable images
-            case AppManager.AppState.ActiveTrackingLesson01: //lesson on how finding and tracking interactives
-            case AppManager.AppState.ActiveTrackingLesson02: //lesson on how finding and tracking interactives
-            case AppManager.AppState.ActiveTrackingLesson03: //lesson on how finding and tracking interactives
-            case AppManager.AppState.InactiveTrackingLesson: //lesson on how finding and tracking interactives
-            case AppManager.AppState.TutorialExplanation:
-            case AppManager.AppState.TutorialExercise01: //lesson on how to turn a bit on with a piece of candy
-            case AppManager.AppState.TutorialExercise02: //lesson on how to turn a bit off with a piece of candy
-            case AppManager.AppState.NumberStationScanning: //lesson on how to find the task station
+            case AppManager.AppState.Eggy03ScanningLesson: //lesson on how to recognize scannable images
+            case AppManager.AppState.Eggy05ActiveTrackingLesson: //lesson on how finding and tracking interactives
+            case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
+            case AppManager.AppState.Tutorial03BitExplanation:
+            case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
+            case AppManager.AppState.Tutorial05GoblinRemove: //lesson on how to turn a bit off with a piece of candy
                 Invoke("TurnOnTracking", 5f);
                 break;
 
-            case AppManager.AppState.TutorialStationScanning: //lesson on how to find the tutorial station
+            case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
+            case AppManager.AppState.Number01StationScanning:
                 removeExistingContent = true;
                 remove3DContent = true;
                 Invoke("TurnOnTracking", 5f);

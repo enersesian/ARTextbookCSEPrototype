@@ -49,8 +49,16 @@ public class TrackerBase : MonoBehaviour
 
         if (interfaceBits[0] && trackerName == "TutorialInteractive(Clone)")
         {
-            if(isTracking) transform.parent.parent.GetComponent<AppManager>().InputDetected(11);
-            else transform.parent.parent.GetComponent<AppManager>().InputDetected(10);
+            if (isTracking)
+            {
+                transform.parent.parent.GetComponent<AppManager>().InputDetected(11);
+                if (gameObject.name == "Task Machine(Clone)") transform.GetChild(1).GetComponent<Renderer>().material.color = Color.green;
+            }
+            else
+            {
+                transform.parent.parent.GetComponent<AppManager>().InputDetected(10);
+                if (gameObject.name == "Task Machine(Clone)") transform.GetChild(1).GetComponent<Renderer>().material.color = Color.red;
+            }
             return true;
         }
         else return false;

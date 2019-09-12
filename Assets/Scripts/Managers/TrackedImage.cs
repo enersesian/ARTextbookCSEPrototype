@@ -39,85 +39,88 @@ public class TrackedImage : Listener
         switch(thisImageDatabaseElement)
         {
             case 0:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "eggy";
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "Eggy";
                 currentElement = Instantiate(eggy, transform.position, transform.rotation);
                 currentElement.GetComponent<TrackerEggy>().enabled = false;
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
             case 1:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "taskStation";
-                currentElement = Instantiate(taskStation, transform.position, transform.rotation);
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "taskStation";
+                currentElement = Instantiate(taskStation, new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.05f), transform.rotation);
+                //currentElement = Instantiate(taskStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
             case 2:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "taskStation";
-                currentElement = Instantiate(taskStation, transform.position, transform.rotation);
-                currentElement.GetComponent<ITransition>().TurnOn();
-                currentElement.transform.parent = transform;
+                //Tracker is confusing Eggy with Output Station, long term fix is change Eggy tracker
+                if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.Eggy04RotatingLesson)
+                {
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "Eggy";
+                    currentElement = Instantiate(eggy, transform.position, transform.rotation);
+                    currentElement.GetComponent<TrackerEggy>().enabled = false;
+                    currentElement.GetComponent<ITransition>().TurnOn();
+                    currentElement.transform.parent = transform;
+                }
                 break;
             case 3:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "numberStation";
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "numberStation";
                 currentElement = Instantiate(numberStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
             case 4:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "shapeStation";
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "shapeStation";
                 currentElement = Instantiate(shapeStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
             case 5:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "colorStation";
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "colorStation";
                 currentElement = Instantiate(colorStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
             case 6:
+                if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.Tutorial04GoblinAdd)
+                {
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "tutorialBit";
+                    currentElement = Instantiate(tutorialInteractive, transform.position, transform.rotation);
+                }
+                else
+                {
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "leftBit";
+                    currentElement = Instantiate(centerInteractive, transform.position, transform.rotation);
+                }
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
+
             case 8:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "interactive";
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "rightBit";
                 currentElement = Instantiate(centerInteractive, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
             case 7:
-                if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.InactiveTrackingLesson)
+                if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.Eggy06InactiveTrackingLesson)
                 {
                     currentElement = Instantiate(eggyInteractive, transform.position, transform.rotation);
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "eggyInteractive";
-                }
-
-                else if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.TutorialExercise01)
-                {
-                    currentElement = Instantiate(tutorialInteractive, transform.position, transform.rotation);
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "tutorialInteractive";
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "eggyBit";
                 }
                 else
                 {
                     currentElement = Instantiate(centerInteractive, transform.position, transform.rotation);
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "tutorialInteractive";
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "centerBit";
                 }
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
             default:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textTrackingState.text = thisImageDatabaseElement.ToString();
-                imageTrackingController.gameObject.GetComponent<AppManager>().textAppState.text = "colorStation";
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "colorStation";
                 break;
         } 
     }
