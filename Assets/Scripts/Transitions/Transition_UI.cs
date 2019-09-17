@@ -12,20 +12,22 @@ public class Transition_UI : MonoBehaviour, ITransition
     private bool isOn;
 
     public float imageAlpha;
+    public bool repeaterForTrackingStatus = true;
 
     public void TurnOff()
     {
         if(isOn)
         {
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, false, imageAlpha));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, false, imageAlpha));
-            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, false, 1f));
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, imageAlpha));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, imageAlpha));
+            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, 1f));
             isOn = false;
         }
     }
 
     public void TurnOn(float tempWaitTime) //overloaded operator in case need a wait time
     {
+        repeaterForTrackingStatus = true;
         Invoke("TurnOn", tempWaitTime);
     }
 
@@ -33,17 +35,17 @@ public class Transition_UI : MonoBehaviour, ITransition
     {
         if(!isOn)
         {
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, true, imageAlpha));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, true, imageAlpha));
-            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, true, 1f));
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, imageAlpha));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, imageAlpha));
+            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, 1f));
             isOn = true;
         }
     }
 
-    private IEnumerator AlphaTransition(MaskableGraphic element, bool toOn, float tempAlpha)
+    private IEnumerator AlphaTransition(MaskableGraphic element, float tempAlpha)
     {
         float elapsedTime = 0f, start, end;
-        if (toOn)
+        if (isOn)
         {
             start = 0f;
             end = tempAlpha;
@@ -61,6 +63,11 @@ public class Transition_UI : MonoBehaviour, ITransition
             yield return null;
         }
         element.color = new Color(element.color.r, element.color.g, element.color.b, end);
+        if (gameObject.name == "TrackingStatusIcon_Active" && repeaterForTrackingStatus)
+        {
+            if (isOn) TurnOff();
+            else TurnOn();
+        }
         yield return null;
     }
 }

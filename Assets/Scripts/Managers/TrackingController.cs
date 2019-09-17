@@ -43,6 +43,16 @@ public class TrackingController : Listener
         Application.targetFrameRate = 60;
     }
 
+    public void ResetTracking()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).GetComponent<TrackedImage>().anchor = transform.GetChild(i).GetComponent<TrackedImage>().image.CreateAnchor(transform.GetChild(i).GetComponent<TrackedImage>().image.CenterPose);
+            transform.GetChild(i).position = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.position;
+            transform.GetChild(i).rotation = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.rotation;
+        }
+    }
+
     /// <summary>
     /// The Unity Update method.
     /// </summary>
@@ -63,18 +73,19 @@ public class TrackingController : Listener
         }
 
         //two finger touch is the default touch interaction with the app
-        if (Input.GetMouseButtonDown(1)) gameManager.UserInputDetected();
-
+        //if (Input.GetMouseButtonDown(1)) gameManager.UserInputDetected();
+        //got replaced with the continue button on the UI
+        /*
         //Reset app to welcome screen
         if (Input.GetMouseButtonDown(2))
         {
-            /*
-            shouldControllerBeTracking = false;
-            removeExistingContent = true;
-            remove3DContent = true;
-            gameManager.StartApp();
-            return;
-            */
+            
+            //shouldControllerBeTracking = false;
+            //removeExistingContent = true;
+            //remove3DContent = true;
+            //gameManager.StartApp();
+            //return;
+            
             for(int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).GetComponent<TrackedImage>().anchor = transform.GetChild(i).GetComponent<TrackedImage>().image.CreateAnchor(transform.GetChild(i).GetComponent<TrackedImage>().image.CenterPose);
@@ -82,7 +93,7 @@ public class TrackingController : Listener
                 transform.GetChild(i).rotation = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.rotation;
             }
         }
-
+        */
         // Exit the app when the 'back' button is pressed.
         if (Input.GetKey(KeyCode.Escape)) Application.Quit();
 
@@ -202,7 +213,6 @@ public class TrackingController : Listener
             case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
             case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
             case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
-            case AppManager.AppState.Tutorial06GoblinPractice: //confirm moving from tutorial to task station
             default:
                 shouldControllerBeTracking = false;
                 break;
@@ -214,10 +224,7 @@ public class TrackingController : Listener
 
             case AppManager.AppState.Eggy03ScanningLesson: //lesson on how to recognize scannable images
             case AppManager.AppState.Eggy05ActiveTrackingLesson: //lesson on how finding and tracking interactives
-            case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
             case AppManager.AppState.Tutorial03BitExplanation:
-            case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
-            case AppManager.AppState.Tutorial05GoblinRemove: //lesson on how to turn a bit off with a piece of candy
                 Invoke("TurnOnTracking", 5f);
                 break;
 
@@ -226,6 +233,14 @@ public class TrackingController : Listener
                 removeExistingContent = true;
                 remove3DContent = true;
                 Invoke("TurnOnTracking", 5f);
+                break;
+
+            //dont need to be scanning for new targets
+            case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
+            case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
+            case AppManager.AppState.Tutorial05CurrentStateExplanation:
+            case AppManager.AppState.Tutorial06GoblinRemove:
+            case AppManager.AppState.Tutorial07GoblinPractice: //confirm moving from tutorial to task station
                 break;
         }
     }

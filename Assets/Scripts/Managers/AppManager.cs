@@ -7,7 +7,7 @@ public class AppManager : MonoBehaviour
 {
     public enum AppState { Eggy01Welcome, Eggy02ResetInstructions, Eggy03ScanningLesson, Eggy04RotatingLesson, Eggy05ActiveTrackingLesson,
         Eggy06InactiveTrackingLesson, Eggy07TrackingExercise, Tutorial01StationScanning, Tutorial02BitScanning, Tutorial03BitExplanation,
-        Tutorial04GoblinAdd, Tutorial05GoblinRemove, Tutorial06GoblinPractice, Number01StationScanning };
+        Tutorial04GoblinAdd, Tutorial05CurrentStateExplanation, Tutorial06GoblinRemove, Tutorial07GoblinPractice, Number01StationScanning };
     public AppState currentAppState;
 
     public enum ActiveStation { Task, Number, Shape, Color, None };
@@ -64,8 +64,8 @@ public class AppManager : MonoBehaviour
         //0 - 5 eggy, tutorial, task, number, shape, color stations
         //6 - 8 left, center, right interactives
         //9 eggy interactive lost tracking for AppManager.AppState.InactiveTrackingLesson
-        //10 tutorial station exercise, bit turns to 1
-        //11 tutorial station exercise, bit turns to 0
+        //10 tutorial station exercise, bit turns to 0
+        //11 tutorial station exercise, bit turns to 1
 
         switch (currentAppState)
         {
@@ -136,16 +136,21 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.Tutorial04GoblinAdd: //center cart tracking becomes inactive, ie bit turns to 0
-                if (temp == 10) SetAppState(AppState.Tutorial05GoblinRemove, ActiveStation.None);
+                if (temp == 10) SetAppState(AppState.Tutorial05CurrentStateExplanation, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Tutorial05GoblinRemove: //center cart tracking becomes active, ie bit turns to 1
-                if (temp == 11) SetAppState(AppState.Tutorial06GoblinPractice, ActiveStation.None);
+            case AppManager.AppState.Tutorial05CurrentStateExplanation:
+                if (temp == -1) SetAppState(AppState.Tutorial06GoblinRemove, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Tutorial06GoblinPractice: //two finger touch
+            case AppManager.AppState.Tutorial06GoblinRemove: //center cart tracking becomes active, ie bit turns to 1 AND user clicks submit button
+                if (temp == 11) SetAppState(AppState.Tutorial07GoblinPractice, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Tutorial07GoblinPractice: //two finger touch
                 if (temp == -1) SetAppState(AppState.Number01StationScanning, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
