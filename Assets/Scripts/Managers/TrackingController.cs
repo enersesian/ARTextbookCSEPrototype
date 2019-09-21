@@ -223,6 +223,9 @@ public class TrackingController : Listener
                 break;
 
             case AppManager.AppState.Eggy03ScanningLesson: //lesson on how to recognize scannable images
+                Invoke("TurnOnTracking", 1f); //Since eggy is a poor tracker give more time to finding him
+                break;
+
             case AppManager.AppState.Eggy05ActiveTrackingLesson: //lesson on how finding and tracking interactives
             case AppManager.AppState.Tutorial03BitExplanation:
                 Invoke("TurnOnTracking", 5f);
@@ -230,8 +233,9 @@ public class TrackingController : Listener
 
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
             case AppManager.AppState.Number01StationScanning:
-                removeExistingContent = true;
-                remove3DContent = true;
+                //removeExistingContent = true;
+                //remove3DContent = true;
+                Invoke("DelayRemoveContent", 5f);
                 Invoke("TurnOnTracking", 5f);
                 break;
 
@@ -248,5 +252,11 @@ public class TrackingController : Listener
     private void TurnOnTracking()
     {
         shouldControllerBeTracking = true;
+    }
+
+    private void DelayRemoveContent()
+    {
+        removeExistingContent = true;
+        remove3DContent = true;
     }
 }

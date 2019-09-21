@@ -37,6 +37,7 @@ public class View : Listener
         if(nextTrackingStatusIconState == TrackingStatusState.SearchingForATrackableNew)
         {
             currentTrackingStatusState = TrackingStatusState.SearchingForATrackableNew;
+            trackingStatusIconTransition.repeaterForTrackingStatus = true;
             trackingStatusIconTransition.TurnOn();
             //trackingStatusGreenHighlightTransition.TurnOn();
             trackingResetButton.interactable = false;
@@ -48,8 +49,9 @@ public class View : Listener
         if (nextTrackingStatusIconState == TrackingStatusState.SearchingForATrackableContinued)
         {
             currentTrackingStatusState = TrackingStatusState.SearchingForATrackableContinued;
+            trackingStatusIconTransition.repeaterForTrackingStatus = true;
             trackingStatusIconTransition.TurnOn();
-            trackingStatusGreenHighlightTransition.TurnOn();
+            //trackingStatusGreenHighlightTransition.TurnOn();
 
             //invoke turn on tracking reset button after x seconds
         }
@@ -60,6 +62,7 @@ public class View : Listener
             currentTrackingStatusState = TrackingStatusState.TrackedAtLeastOneTrackable;
             trackingStatusIconTransition.repeaterForTrackingStatus = false;
             trackingStatusIconTransition.TurnOff();
+            trackingStatusGreenHighlightTransition.TurnOn();
             trackingResetButton.interactable = true;
         }
     }
@@ -82,7 +85,7 @@ public class View : Listener
             case AppManager.AppState.Eggy03ScanningLesson: //lesson on how to recognize scannable images
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
                 continueInstructionButton.interactable = false;
-                UpdateText("Notice the scanning icon is blinking, that tells you that the phone is actively scanning.", true);
+                UpdateText("Notice the scanning icon on top left is blinking, that tells you that the phone is actively scanning.", true);
                 UpdateText("Move phone close to Eggy to scan. If Eggy is not scanning, try moving the phone back and forth.", false);
                 break;
 
@@ -110,15 +113,15 @@ public class View : Listener
 
             case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
                 continueInstructionButton.interactable = true;
-                UpdateText("Now frame up on me so that you can track me along with the candy. I will start glowing green when I'm tracked.", true);
+                UpdateText("Frame up my image so that you can track me along with the candy. I will glow green when I'm tracked.", true);
                 UpdateText("Now practice getting both of the candy and me tracked well and glowing green. When ready, please tap continue.", false);
                 break;
 
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
                 continueInstructionButton.interactable = false;
-                UpdateText("The candy represents a bit, which is a counting unit for computers, like digits and fingers for humans.", true);
-                UpdateText("When you are ready to learn more about bits, turn the page to scan the tutorial station.", false);
+                UpdateText("The candy represents a bit, a counting unit for computers, like fingers for humans. I'm going to the next page.", true);
+                UpdateText("When you are ready to learn more about bits, turn the page and scan the tutorial station image.", false);
                 break;
 
             case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction

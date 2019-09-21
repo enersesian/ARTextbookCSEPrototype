@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Transition_3D : MonoBehaviour, ITransition
 {
     private bool isOn;
-    public float waitTime;
+    public float transitionSpeed;
 
     public void TurnOff()
     {
@@ -44,9 +44,9 @@ public class Transition_3D : MonoBehaviour, ITransition
             end = Vector3.zero;
         }
 
-        while (elapsedTime < waitTime)
+        while (elapsedTime < transitionSpeed)
         {
-            transform.localScale = Vector3.Lerp(start, end, (elapsedTime / waitTime));
+            transform.localScale = Vector3.Lerp(start, end, (elapsedTime / transitionSpeed));
             elapsedTime += Time.deltaTime;
             yield return null;
         }

@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bc758cb5b83a244b1839b157aba198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anchor: {fileID: 0}
   ARBookPageElements: []
-  eggy: {fileID: 1275911409530888, guid: 2777f85e7899f5a4dbcd7ae86efb3c9d, type: 2}
+  eggy: {fileID: 1275911409530888, guid: 580bc85afb86ddd448406800ae22308f, type: 2}
   eggyInteractive: {fileID: 1338170162687544, guid: 772631670d24d7f488a0d5e5aae36f70,
     type: 2}
   tutorialInteractive: {fileID: 1250134776251052, guid: fa279dfee39b08747935ba5f82ab75e3,

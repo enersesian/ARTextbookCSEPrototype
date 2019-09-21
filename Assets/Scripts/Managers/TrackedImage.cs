@@ -41,9 +41,9 @@ public class TrackedImage : Listener
             case 0:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "Eggy";
                 currentElement = Instantiate(eggy, transform.position, transform.rotation);
-                currentElement.GetComponent<TrackerEggy>().enabled = false;
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
+                //currentElement.transform.GetChild(0).GetComponent<Animator>().SetTrigger("handsUp");
                 break;
             case 1:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "taskStation";

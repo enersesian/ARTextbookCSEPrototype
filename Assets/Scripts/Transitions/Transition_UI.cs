@@ -8,20 +8,20 @@ public class Transition_UI : MonoBehaviour, ITransition
     public RawImage[] rawImages;
     public Image[] images;
     public Text[] texts;
-    public float waitTime;
+    public float transitionSpeed;
     private bool isOn;
 
-    public float imageAlpha;
+    public float imageHighestAlpha;
     public bool repeaterForTrackingStatus = true;
 
     public void TurnOff()
     {
         if(isOn)
         {
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, imageAlpha));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, imageAlpha));
-            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, 1f));
             isOn = false;
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, element.color.a));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, element.color.a));
+            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, element.color.a));
         }
     }
 
@@ -35,30 +35,30 @@ public class Transition_UI : MonoBehaviour, ITransition
     {
         if(!isOn)
         {
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, imageAlpha));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, imageAlpha));
-            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, 1f));
             isOn = true;
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, element.color.a));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, element.color.a));
+            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, element.color.a));
         }
     }
 
     private IEnumerator AlphaTransition(MaskableGraphic element, float tempAlpha)
     {
         float elapsedTime = 0f, start, end;
-        if (isOn)
+        if (isOn) //Go from off to on
         {
-            start = 0f;
-            end = tempAlpha;
+            start = tempAlpha;
+            end = imageHighestAlpha;
         }
-        else
+        else //Go from on to off
         {
             start = tempAlpha;
             end = 0f;
         }
 
-        while (elapsedTime < waitTime)
+        while (elapsedTime < transitionSpeed)
         {
-            element.color = new Color(element.color.r, element.color.g, element.color.b, Mathf.Lerp(start, end, (elapsedTime / waitTime)));
+            element.color = new Color(element.color.r, element.color.g, element.color.b, Mathf.Lerp(start, end, (elapsedTime / transitionSpeed)));
             elapsedTime += Time.deltaTime;
             yield return null;
         }

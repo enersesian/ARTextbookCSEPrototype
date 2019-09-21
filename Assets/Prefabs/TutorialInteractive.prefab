@@ -363,8 +363,9 @@ MonoBehaviour:
   texts:
   - {fileID: 114892895900505942}
   - {fileID: 114626373142253638}
-  waitTime: 2
-  imageAlpha: 0.3
+  transitionSpeed: 1
+  imageHighestAlpha: 0.3
+  repeaterForTrackingStatus: 1
 --- !u!135 &135224850018254806
 SphereCollider:
   m_ObjectHideFlags: 1

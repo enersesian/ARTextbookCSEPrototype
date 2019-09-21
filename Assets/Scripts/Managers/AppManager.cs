@@ -80,10 +80,10 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.Eggy03ScanningLesson: //Eggy index number
-                if (temp == 0 || temp == 2)
+                if (temp == 0)// || temp == 2) //eggy is poor tracker and sometimes picks up other images first
                 {
-                    SetAppState(AppState.Eggy04RotatingLesson, ActiveStation.None);
                     shouldImagebeTracked = true;
+                    SetAppState(AppState.Eggy04RotatingLesson, ActiveStation.None);
                 }
                 else shouldImagebeTracked = false;
                 break;
@@ -96,8 +96,8 @@ public class AppManager : MonoBehaviour
             case AppManager.AppState.Eggy05ActiveTrackingLesson: //center cart index number
                 if (temp == 7)
                 {
-                    SetAppState(AppState.Eggy06InactiveTrackingLesson, ActiveStation.None);
                     shouldImagebeTracked = true;
+                    SetAppState(AppState.Eggy06InactiveTrackingLesson, ActiveStation.None);
                 }
                 else shouldImagebeTracked = false;
                 break;

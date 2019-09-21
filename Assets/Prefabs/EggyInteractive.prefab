@@ -206,8 +206,9 @@ MonoBehaviour:
   texts:
   - {fileID: 114944465731997512}
   - {fileID: 114069271627458778}
-  waitTime: 2
-  imageAlpha: 0.3
+  transitionSpeed: 1
+  imageHighestAlpha: 0.3
+  repeaterForTrackingStatus: 1
 --- !u!114 &114381991835111520
 MonoBehaviour:
   m_ObjectHideFlags: 1
