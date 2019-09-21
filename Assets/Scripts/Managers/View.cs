@@ -93,7 +93,7 @@ public class View : Listener
                 TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
                 continueInstructionButton.interactable = true;
                 UpdateText("Hi, Im Eggy! Its fun being spawned into your world, and it's even funnier to spin me around!", true);
-                UpdateText("Place phone back to original spot, then swipe with one finger to rotate me! When done, tap continue.", false);
+                UpdateText("Swipe with one finger to rotate me! When done, tap continue.", false);
                 
                 break;
 
@@ -120,8 +120,8 @@ public class View : Listener
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
                 continueInstructionButton.interactable = false;
-                UpdateText("The candy represents a bit, a counting unit for computers, like fingers for humans. I'm going to the next page.", true);
-                UpdateText("When you are ready to learn more about bits, turn the page and scan the tutorial station image.", false);
+                UpdateText("The candy represents a bit, a counting unit for computers, like fingers and digits for humans.", true);
+                UpdateText("When you are ready to learn more about bits, turn the page and scan the tutorial station image. I'll meet you there.", false);
                 break;
 
             case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction

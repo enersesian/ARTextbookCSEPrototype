@@ -62,7 +62,7 @@ MonoBehaviour:
     type: 2}
   tutorialStation: {fileID: 1646401289346920, guid: 5701ae07317f0c9498ebb10abcf833fc,
     type: 2}
-  taskStation: {fileID: 1918251740592040, guid: 403effea06b9b19429c9dedd40e1cd93,
+  taskStation: {fileID: 1182146148903520, guid: b7893694dac3d64499bfb890eb28db2b,
     type: 2}
   numberStation: {fileID: 1913458577490608, guid: 44fc55fa9a0e58f4ea1241d75dfbc464,
     type: 2}

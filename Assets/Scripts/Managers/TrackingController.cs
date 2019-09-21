@@ -236,7 +236,7 @@ public class TrackingController : Listener
                 //removeExistingContent = true;
                 //remove3DContent = true;
                 Invoke("DelayRemoveContent", 5f);
-                Invoke("TurnOnTracking", 5f);
+                Invoke("TurnOnTracking", 10f);
                 break;
 
             //dont need to be scanning for new targets
