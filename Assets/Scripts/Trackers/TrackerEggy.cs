@@ -32,7 +32,7 @@ public class TrackerEggy : MonoBehaviour
         {
             isFullTracked = true;
             InteractionNotice(true);
-            mainTracker.TrackingNotice("eggy", true);
+            if(mainTracker != null) mainTracker.TrackingNotice("eggy", true);
             //SetBit(true);
         }
 
@@ -46,7 +46,7 @@ public class TrackerEggy : MonoBehaviour
                 isFullTracked = false;
                 timeSinceFullTrackingMethod = 0f;
                 InteractionNotice(false);
-                mainTracker.TrackingNotice("eggy", false);
+                if (mainTracker != null) mainTracker.TrackingNotice("eggy", false);
             }
         }
         else
@@ -77,13 +77,13 @@ public class TrackerEggy : MonoBehaviour
         if (isReady)
         {
             //if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
-            transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.green);
+            transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.green);
         }
         else
         {
             //if(transform.GetChild(2).GetComponent<Image>()) transform.GetChild(2).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(2).GetComponent<Image>().color.a);
             //if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking();
-            transform.GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red);
+            transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red);
         }
     }
 }

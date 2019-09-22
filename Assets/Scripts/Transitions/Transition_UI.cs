@@ -19,9 +19,9 @@ public class Transition_UI : MonoBehaviour, ITransition
         if(isOn)
         {
             isOn = false;
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, element.color.a));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, element.color.a));
-            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, element.color.a));
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, element.color.a, imageHighestAlpha));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, element.color.a, imageHighestAlpha));
+            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, element.color.a, 1f));
         }
     }
 
@@ -36,19 +36,19 @@ public class Transition_UI : MonoBehaviour, ITransition
         if(!isOn)
         {
             isOn = true;
-            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, element.color.a));
-            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, element.color.a));
-            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, element.color.a));
+            foreach (MaskableGraphic element in rawImages) StartCoroutine(AlphaTransition(element, element.color.a, imageHighestAlpha));
+            foreach (MaskableGraphic element in images) StartCoroutine(AlphaTransition(element, element.color.a, imageHighestAlpha));
+            foreach (MaskableGraphic element in texts) StartCoroutine(AlphaTransition(element, element.color.a, 1f));
         }
     }
 
-    private IEnumerator AlphaTransition(MaskableGraphic element, float tempAlpha)
+    private IEnumerator AlphaTransition(MaskableGraphic element, float tempAlpha, float highestEndAlpha)
     {
         float elapsedTime = 0f, start, end;
         if (isOn) //Go from off to on
         {
             start = tempAlpha;
-            end = imageHighestAlpha;
+            end = highestEndAlpha;
         }
         else //Go from on to off
         {

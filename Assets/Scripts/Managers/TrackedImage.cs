@@ -17,11 +17,7 @@ public class TrackedImage : Listener
     public AugmentedImage image;
     public Anchor anchor;
 
-    /// <summary>
-    /// A world space UI to act as a three bit counter for number station.
-    /// </summary>
-    public GameObject[] ARBookPageElements;
-    public GameObject eggy, eggyInteractive, tutorialInteractive, centerInteractive, tutorialStation, taskStation, numberStation, shapeStation, colorStation;
+    public GameObject eggy, eggyInteractive, candyBit, cookieBit, coffeeBit, taskStation, numberStation, shapeStation, colorStation, outputStation;
 
     public static TrackedImage[] imageDatabaseElement = new TrackedImage[9];
     public int thisImageDatabaseElement;
@@ -52,58 +48,46 @@ public class TrackedImage : Listener
                 currentElement.transform.parent = transform;
                 break;
             case 2:
-                //Tracker is confusing Eggy with Output Station, long term fix is change Eggy tracker
-                if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.Eggy04RotatingLesson)
-                {
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "Eggy";
-                    currentElement = Instantiate(eggy, transform.position, transform.rotation);
-                    currentElement.GetComponent<TrackerEggy>().enabled = false;
-                    currentElement.GetComponent<ITransition>().TurnOn();
-                    currentElement.transform.parent = transform;
-                }
-                break;
-            case 3:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "numberStation";
                 currentElement = Instantiate(numberStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
-            case 4:
+            case 3:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "shapeStation";
                 currentElement = Instantiate(shapeStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
-            case 5:
+            case 4:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "colorStation";
                 currentElement = Instantiate(colorStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
+            case 5:
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "outputStation";
+                currentElement = Instantiate(colorStation, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
 
-            case 6:
+            case 6: //cookie bit
                 if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.Tutorial04GoblinAdd)
                 {
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "tutorialBit";
-                    currentElement = Instantiate(tutorialInteractive, transform.position, transform.rotation);
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "taskCookie";
+                    currentElement = Instantiate(cookieBit, transform.position, transform.rotation);
                 }
                 else
                 {
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "leftBit";
-                    currentElement = Instantiate(centerInteractive, transform.position, transform.rotation);
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "cookieBit";
+                    currentElement = Instantiate(cookieBit, transform.position, transform.rotation);
                 }
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
-            case 8:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "rightBit";
-                currentElement = Instantiate(centerInteractive, transform.position, transform.rotation);
-                currentElement.GetComponent<ITransition>().TurnOn();
-                currentElement.transform.parent = transform;
-                break;
-
-            case 7:
+            case 7: //candy bit
                 if (imageTrackingController.gameObject.GetComponent<AppManager>().currentAppState == AppManager.AppState.Eggy06InactiveTrackingLesson)
                 {
                     currentElement = Instantiate(eggyInteractive, transform.position, transform.rotation);
@@ -111,15 +95,21 @@ public class TrackedImage : Listener
                 }
                 else
                 {
-                    currentElement = Instantiate(centerInteractive, transform.position, transform.rotation);
-                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "centerBit";
+                    currentElement = Instantiate(candyBit, transform.position, transform.rotation);
+                    imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "candyBit";
                 }
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;
 
+            case 8: //coffee bit
+                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "coffeeBit";
+                currentElement = Instantiate(coffeeBit, transform.position, transform.rotation);
+                currentElement.GetComponent<ITransition>().TurnOn();
+                currentElement.transform.parent = transform;
+                break;
+
             default:
-                imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "colorStation";
                 break;
         } 
     }

@@ -52,17 +52,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 0}
-  ARBookPageElements: []
   eggy: {fileID: 1275911409530888, guid: 580bc85afb86ddd448406800ae22308f, type: 2}
   eggyInteractive: {fileID: 1338170162687544, guid: 772631670d24d7f488a0d5e5aae36f70,
     type: 2}
-  tutorialInteractive: {fileID: 1250134776251052, guid: fa279dfee39b08747935ba5f82ab75e3,
-    type: 2}
-  centerInteractive: {fileID: 1024771874914134, guid: daf0b6198440a6e46a5ddddcd72daf9b,
-    type: 2}
-  tutorialStation: {fileID: 1646401289346920, guid: 5701ae07317f0c9498ebb10abcf833fc,
-    type: 2}
-  taskStation: {fileID: 1182146148903520, guid: b7893694dac3d64499bfb890eb28db2b,
+  candyBit: {fileID: 1650799736237128, guid: 938637d173767fd4e891bc6b940c1588, type: 2}
+  cookieBit: {fileID: 1426129443456186, guid: 8edbe205fb3fa334aa8d2d9e9259a579, type: 2}
+  coffeeBit: {fileID: 1752821314149376, guid: d4563cc6ecc606243b94930f963ca8e0, type: 2}
+  taskStation: {fileID: 1100913632161178, guid: b7893694dac3d64499bfb890eb28db2b,
     type: 2}
   numberStation: {fileID: 1913458577490608, guid: 44fc55fa9a0e58f4ea1241d75dfbc464,
     type: 2}
@@ -70,4 +66,5 @@ MonoBehaviour:
     type: 2}
   colorStation: {fileID: 1461420902961632, guid: 65bef4d03d01d5b4081b8cfe86e0ede2,
     type: 2}
+  outputStation: {fileID: 0}
   thisImageDatabaseElement: 0

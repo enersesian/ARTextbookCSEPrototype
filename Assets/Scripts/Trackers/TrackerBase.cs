@@ -16,10 +16,12 @@ public class TrackerBase : MonoBehaviour
     void Start()
     {
         thisTrackedImage = GetComponent<TrackedImage>();
-        if (gameObject.name == "Task Machine(Clone)") interfaceBits = new bool[2];
-        if (gameObject.name == "Number machine(Clone)") interfaceBits = new bool[4];
-        if (gameObject.name == "Shape machine(Clone)") interfaceBits = new bool[3];
-        if (gameObject.name == "Color machine(Clone)") interfaceBits = new bool[4];
+        if (gameObject.name == "TaskStation(Clone)") interfaceBits = new bool[2];
+        if (gameObject.name == "NumberStation(Clone)") interfaceBits = new bool[4];
+        if (gameObject.name == "ShapeStation(Clone)") interfaceBits = new bool[3];
+        if (gameObject.name == "ColorStation(Clone)") interfaceBits = new bool[4];
+        if (gameObject.name == "OutputStation(Clone)") interfaceBits = new bool[4];
+
         for (int i = 0; i < interfaceBits.Length; i++)
         {
             //interfaceBits[i] = true;
@@ -44,20 +46,63 @@ public class TrackerBase : MonoBehaviour
 
     public bool TrackingNotice(string trackerName, bool isTracking)
     {
-        if (trackerName == "eggy") interfaceBits[0] = isTracking;
-        if (trackerName == "TutorialInteractive(Clone)") interfaceBits[1] = isTracking;
 
-        if (interfaceBits[0] && trackerName == "TutorialInteractive(Clone)")
+        if (trackerName == "eggy") interfaceBits[0] = isTracking;
+        if (gameObject.name == "TaskStation(Clone)" || gameObject.name == "OutputStation(Clone)")
+        {
+            if (trackerName == "CookieBit(Clone)") interfaceBits[1] = isTracking;
+        }
+        if (gameObject.name == "NumberStation(Clone)")
+        {
+            if (trackerName == "CandyBit(Clone)") interfaceBits[1] = isTracking;
+            if (trackerName == "CookieBit(Clone)") interfaceBits[2] = isTracking;
+            if (trackerName == "CoffeeBit(Clone)") interfaceBits[3] = isTracking;
+        }
+        if (gameObject.name == "ShapeStation(Clone)")
+        {
+            if (trackerName == "CandyBit(Clone)") interfaceBits[1] = isTracking;
+            if (trackerName == "CookieBit(Clone)") interfaceBits[2] = isTracking;
+        }
+        if (gameObject.name == "ColorStation(Clone)")
+        {
+            if (trackerName == "CandyBit(Clone)") interfaceBits[1] = isTracking;
+            if (trackerName == "CookieBit(Clone)") interfaceBits[2] = isTracking;
+            if (trackerName == "CoffeeBit(Clone)") interfaceBits[3] = isTracking;
+        }
+
+        if (interfaceBits[0] && trackerName == "CookieBit(Clone)")
+        {
+            if (isTracking)
+            {
+                transform.parent.parent.GetComponent<AppManager>().InputDetected(13);
+            }
+            else
+            {
+                transform.parent.parent.GetComponent<AppManager>().InputDetected(12);
+            }
+            return true;
+        }
+        else if (interfaceBits[0] && trackerName == "CandyBit(Clone)")
         {
             if (isTracking)
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(11);
-                if (gameObject.name == "Task Machine(Clone)") transform.GetChild(1).GetComponent<Renderer>().material.color = Color.green;
             }
             else
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(10);
-                if (gameObject.name == "Task Machine(Clone)") transform.GetChild(1).GetComponent<Renderer>().material.color = Color.red;
+            }
+            return true;
+        }
+        else if (interfaceBits[0] && trackerName == "CoffeeBit(Clone)")
+        {
+            if (isTracking)
+            {
+                transform.parent.parent.GetComponent<AppManager>().InputDetected(15);
+            }
+            else
+            {
+                transform.parent.parent.GetComponent<AppManager>().InputDetected(14);
             }
             return true;
         }

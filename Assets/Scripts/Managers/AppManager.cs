@@ -22,15 +22,18 @@ public class AppManager : MonoBehaviour
 
     public Text textAppState, textTrackingState, textLastSpawned;
 
+    private View view;
+
     private void Start() //called after awake to let listeners register first
     {
+        view = GetComponent<View>();
         StartApp();
     }
 
     public void StartApp() //also used with reset input
     {
-        SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
-        //SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+        //SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
+        SetAppState(AppState.Tutorial01StationScanning, ActiveStation.None);
     }
 
     private void SetAppState(AppState tempState, ActiveStation tempStation)
@@ -58,14 +61,41 @@ public class AppManager : MonoBehaviour
         listeners.Add(newListener);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            InputDetected(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            InputDetected(6);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            InputDetected(12);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            InputDetected(13);
+        }
+    }
+
     public bool InputDetected(int temp)
     {
         //-1 two finger touch
         //0 - 5 eggy, tutorial, task, number, shape, color stations
         //6 - 8 left, center, right interactives
-        //9 eggy interactive lost tracking for AppManager.AppState.InactiveTrackingLesson
-        //10 tutorial station exercise, bit turns to 0
-        //11 tutorial station exercise, bit turns to 1
+        //9 eggy interactive lost tracking for AppManager.AppState.InactiveTrackingLesson, not currently used
+        //10 tutorial station exercise, candy bit turns to 0
+        //11 tutorial station exercise, candy bit turns to 1
+        //12 tutorial station exercise, cookie bit turns to 0
+        //13 tutorial station exercise, cookie bit turns to 1
+        //14 tutorial station exercise, coffee bit turns to 0
+        //15 tutorial station exercise, coffee bit turns to 1
 
         switch (currentAppState)
         {
@@ -136,17 +166,25 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.Tutorial04GoblinAdd: //center cart tracking becomes inactive, ie bit turns to 0
-                if (temp == 10) SetAppState(AppState.Tutorial05CurrentStateExplanation, ActiveStation.None);
+                if (temp == 12) SetAppState(AppState.Tutorial05CurrentStateExplanation, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
             case AppManager.AppState.Tutorial05CurrentStateExplanation:
+                if(temp == 12)
+                {
+                    view.SetCurrentStatusText("Off");
+                }
+                if(temp == 13)
+                {
+                    view.SetCurrentStatusText("On");
+                }
                 if (temp == -1) SetAppState(AppState.Tutorial06GoblinRemove, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
             case AppManager.AppState.Tutorial06GoblinRemove: //center cart tracking becomes active, ie bit turns to 1 AND user clicks submit button
-                if (temp == 11) SetAppState(AppState.Tutorial07GoblinPractice, ActiveStation.None);
+                if (temp == 13) SetAppState(AppState.Tutorial07GoblinPractice, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 

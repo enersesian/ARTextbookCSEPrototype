@@ -15,10 +15,16 @@ public class View : Listener
     public Button trackingResetButton, continueInstructionButton, submitAnswerButton;
     private enum TrackingStatusState { NotSearchingAndNotTracking, SearchingForATrackableNew, SearchingForATrackableContinued, TrackedAtLeastOneTrackable };
     private TrackingStatusState currentTrackingStatusState;
+    public Text objectiveStatusText, currentStatusText;
+    private bool canSetCurrentStatusText, canSetObjectiveStatusText;
 
     private void Start()
     {
         currentTrackingStatusState = TrackingStatusState.NotSearchingAndNotTracking;
+        objectiveStatusText.text = "Objective";
+        objectiveStatusText.fontSize = 60;
+        currentStatusText.text = "Current";
+        currentStatusText.fontSize = 60;
     }
 
     private void TrackingStatusUpdate(TrackingStatusState nextTrackingStatusIconState)
@@ -39,7 +45,7 @@ public class View : Listener
             currentTrackingStatusState = TrackingStatusState.SearchingForATrackableNew;
             trackingStatusIconTransition.repeaterForTrackingStatus = true;
             trackingStatusIconTransition.TurnOn();
-            //trackingStatusGreenHighlightTransition.TurnOn();
+            trackingStatusGreenHighlightTransition.TurnOff();
             trackingResetButton.interactable = false;
 
             //invoke turn on tracking reset button after x seconds
@@ -94,7 +100,6 @@ public class View : Listener
                 continueInstructionButton.interactable = true;
                 UpdateText("Hi, Im Eggy! Its fun being spawned into your world, and it's even funnier to spin me around!", true);
                 UpdateText("Swipe with one finger to rotate me! When done, tap continue.", false);
-                
                 break;
 
             case AppManager.AppState.Eggy05ActiveTrackingLesson: //lesson on how finding and tracking interactives
@@ -113,47 +118,51 @@ public class View : Listener
 
             case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
                 continueInstructionButton.interactable = true;
-                UpdateText("Frame up my image so that you can track me along with the candy. I will glow green when I'm tracked.", true);
+                UpdateText("Frame up my image so that you can track me along with the candy. My belt will glow green when I'm tracked.", true);
                 UpdateText("Now practice getting both of the candy and me tracked well and glowing green. When ready, please tap continue.", false);
                 break;
 
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
-                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew); //maybe invoke in 5 seconds to line up with removing 3d content
                 continueInstructionButton.interactable = false;
                 UpdateText("The candy represents a bit, a counting unit for computers, like fingers and digits for humans.", true);
-                UpdateText("When you are ready to learn more about bits, turn the page and scan the tutorial station image. I'll meet you there.", false);
+                UpdateText("When you are ready to learn about bits, turn the page and scan the tutorial station. I'll meet you there.", false);
                 break;
 
             case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
                 TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable); //1 trackable
                 continueInstructionButton.interactable = true;
-                UpdateText("This is the tutorial station. Remember you can rotate it for viewing. I am also here to show you if its tracking.", true);
-                UpdateText("Remember to make sure I am green when trying to interact with a bit. Both of us will need to be tracking. Tap continue.", false);
+                UpdateText("This is the tutorial station. Remember you can rotate it for viewing. If I am green, it is tracking.", true);
+                UpdateText("Always make sure my belt is glowing green when trying to interact with the bits. Tap continue.", false);
                 break;
 
             case AppManager.AppState.Tutorial03BitExplanation: //lesson on how to find the tutorial interaction
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
                 continueInstructionButton.interactable = false;
-                UpdateText("When a bit is green it is turned on, and when a bit is red it is turned off. Lets turn turning a bit on and off.", true);
-                UpdateText("Try scanning the candy below to begin the exercise. You will use one of the sugar goblin cards to turn the bit on and off.", false);
+                UpdateText("When the bit is green it is on, and when the bit is red it is off. Lets try turning a bit on and off.", true);
+                UpdateText("Try scanning the candy below to turn it on, then I will show you how to use a sugar goblin to turn it off.", false);
                 break;
 
             case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit off with a piece of candy
                 TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable); //2 trackables
                 UpdateText("Notice in the colored cookie area now sits a 1. That is a bit, and it is currently set to state 1.", true);
-                UpdateText("Bits can be set to 0 or 1, which is only two states. Let's change the bit's state by putting a sugar goblin card on it.", false); // //Digits can be set to one of ten states: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
+                UpdateText("Bits can be set to only two states, 0 or 1. Let's change the bit by putting a sugar goblin on it.", false); // //Digits can be set to one of ten states: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.
                 break;
 
-            case AppManager.AppState.Tutorial05CurrentStateExplanation: 
+            case AppManager.AppState.Tutorial05CurrentStateExplanation:
+                continueInstructionButton.interactable = true;
                 UpdateText("Great! You just changed the bit from 1 to 0. The two states of a bit can be used to represent many things.", true);
-                UpdateText("Here it's to turn this station on or off. I'm going to track your current state over in the middle right. Tap continue.", false);
+                UpdateText("Here it's turning this station on and off. I'm going to track your progress over to the right. Tap continue.", false);
+                Invoke("ActivateCurrentStatusText", 5f);
                 break;
-                //turn on goal = on and current
+
             case AppManager.AppState.Tutorial06GoblinRemove: //lesson on how to turn a bit on with a piece of candy
-                UpdateText("Now I'm going to give you a goal in the top right. You currently have the station off and I want you to turn it on.", true);
-                UpdateText("Remove the goblin to turn the station on. When your current and goal states are equal, click the submit button in bottom right.", false);
+                continueInstructionButton.interactable = false;
+                UpdateText("Now I'm going to give you an objective in the top right. You just turned the station off and I want you to turn it on.", true);
+                UpdateText("Remove the goblin to turn station on. When your current state matches the objective, click submit button in bottom right.", false);
+                Invoke("ActivateGoalStatusText", 5f);
                 break;
-                //turn off goal
+                
             case AppManager.AppState.Tutorial07GoblinPractice: //confirm moving from tutorial to task station
                 continueInstructionButton.interactable = true;
                 UpdateText("Great! You successfully set bits to their 0 and 1 states, and can turn my station on and off in the process.", true);
@@ -199,6 +208,35 @@ public class View : Listener
             default:
                 break;
         }
+    }
+
+    private void ActivateCurrentStatusText()
+    {
+        currentStatusText.text = "";
+        currentStatusText.fontSize = 60;
+        canSetCurrentStatusText = true;
+    }
+
+    private void ActivateGoalStatusText()
+    {
+        objectiveStatusText.text = "";
+        objectiveStatusText.fontSize = 60;
+        canSetObjectiveStatusText = true;
+    }
+
+    public void SetCurrentStatusText(string text)
+    {
+        if(canSetCurrentStatusText)
+        {
+            currentStatusText.text = text;
+            SetSubmitButtonStatus();
+        }
+    }
+
+    private void SetSubmitButtonStatus()
+    {
+        if (currentStatusText.text == objectiveStatusText.text) submitAnswerButton.enabled = true;
+        else submitAnswerButton.enabled = false;
     }
 
     public void UpdateText(string newText, bool isTop)

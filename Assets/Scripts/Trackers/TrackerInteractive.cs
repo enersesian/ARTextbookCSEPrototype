@@ -32,7 +32,7 @@ public class TrackerInteractive : MonoBehaviour
             //foreach (var element in thisTrackedImage.ARBookPageElements) element.SetActive(false);
             return;
         }
-        if (Time.time < birthTime + 5f) return; //give a 5 second window before it starts pinging away
+        if (Time.time < birthTime + 2f) return; //give a 2 second window before it starts pinging away
 
         if (thisTrackedImage.image.TrackingMethod == AugmentedImageTrackingMethod.FullTracking)
         {
@@ -67,14 +67,14 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (temp)//currentElementIsBitSetToOne)
         {
-            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "1";
+            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "";
             if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "1";
             if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
             currentElementIsBitSetToOne = false;
         }
         else
         {
-            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "0";
+            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "";
             if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "0";
             if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
             currentElementIsBitSetToOne = true;
@@ -90,7 +90,7 @@ public class TrackerInteractive : MonoBehaviour
         else
         {
             if(transform.GetChild(1).GetComponent<Image>()) transform.GetChild(1).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(1).GetComponent<Image>().color.a);
-            if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking();
+            if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking(); //was used for a removed part of eggy page tutorial
         }
     }
 }

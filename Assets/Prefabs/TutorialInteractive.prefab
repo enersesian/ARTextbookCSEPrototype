@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -326,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -362,7 +362,7 @@ MonoBehaviour:
   - {fileID: 114690112769828170}
   texts:
   - {fileID: 114892895900505942}
-  - {fileID: 114626373142253638}
+  - {fileID: 114272027345299666}
   transitionSpeed: 1
   imageHighestAlpha: 0.3
   repeaterForTrackingStatus: 1

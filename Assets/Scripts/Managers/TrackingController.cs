@@ -67,7 +67,7 @@ public class TrackingController : Listener
                 //its a model, not a UI, so go rotate it
                 if (transform.GetChild(i).GetChild(0).gameObject.tag == "3DModel")
                 {
-                    transform.GetChild(i).rotation = Quaternion.Euler(0f, transform.GetChild(i).rotation.eulerAngles.y + Input.GetTouch(0).deltaPosition.x, 0f);
+                    transform.GetChild(i).rotation = Quaternion.Euler(0f, transform.GetChild(i).rotation.eulerAngles.y + (Input.GetTouch(0).deltaPosition.x/2f), 0f);
                 }
             }
         }
@@ -212,8 +212,12 @@ public class TrackingController : Listener
             case AppManager.AppState.Eggy01Welcome: //lesson on using two finger tap to move through app states
             case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
             case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
-            case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
             default:
+                shouldControllerBeTracking = false;
+                break;
+
+            case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
+                ResetTracking(); //can scan tutorial station while user is flipping page and it jumps all over the place so reset its tracking
                 shouldControllerBeTracking = false;
                 break;
 
@@ -235,12 +239,14 @@ public class TrackingController : Listener
             case AppManager.AppState.Number01StationScanning:
                 //removeExistingContent = true;
                 //remove3DContent = true;
-                Invoke("DelayRemoveContent", 5f);
-                Invoke("TurnOnTracking", 10f);
+                Invoke("DelayRemoveContent", 6f);
+                Invoke("TurnOnTracking", 6f);
                 break;
 
             //dont need to be scanning for new targets
             case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
+                ResetTracking();
+                break;
             case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
             case AppManager.AppState.Tutorial05CurrentStateExplanation:
             case AppManager.AppState.Tutorial06GoblinRemove:
