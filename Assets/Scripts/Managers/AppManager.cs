@@ -32,8 +32,8 @@ public class AppManager : MonoBehaviour
 
     public void StartApp() //also used with reset input
     {
-        //SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
-        SetAppState(AppState.Tutorial01StationScanning, ActiveStation.None);
+        SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
+        //SetAppState(AppState.Tutorial01StationScanning, ActiveStation.None);
     }
 
     private void SetAppState(AppState tempState, ActiveStation tempStation)
@@ -96,6 +96,7 @@ public class AppManager : MonoBehaviour
         //13 tutorial station exercise, cookie bit turns to 1
         //14 tutorial station exercise, coffee bit turns to 0
         //15 tutorial station exercise, coffee bit turns to 1
+        //16 Submit Answer button clicked
 
         switch (currentAppState)
         {
@@ -184,11 +185,27 @@ public class AppManager : MonoBehaviour
                 break;
 
             case AppManager.AppState.Tutorial06GoblinRemove: //center cart tracking becomes active, ie bit turns to 1 AND user clicks submit button
-                if (temp == 13) SetAppState(AppState.Tutorial07GoblinPractice, ActiveStation.None);
+                if (temp == 12)
+                {
+                    view.SetCurrentStatusText("Off");
+                }
+                if (temp == 13)
+                {
+                    view.SetCurrentStatusText("On");
+                }
+                if (temp == 16) SetAppState(AppState.Tutorial07GoblinPractice, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
             case AppManager.AppState.Tutorial07GoblinPractice: //two finger touch
+                if (temp == 12)
+                {
+                    view.SetCurrentStatusText("Off");
+                }
+                if (temp == 13)
+                {
+                    view.SetCurrentStatusText("On");
+                }
                 if (temp == -1) SetAppState(AppState.Number01StationScanning, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
@@ -218,6 +235,11 @@ public class AppManager : MonoBehaviour
             shouldRespondToUserInput = false;
             Invoke("ActivateUserInput", 3f);
         }
+    }
+
+    public void AnswerSubmitted()
+    {
+        InputDetected(16);
     }
 
     private void ActivateUserInput()

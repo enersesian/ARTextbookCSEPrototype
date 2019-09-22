@@ -21,10 +21,7 @@ public class View : Listener
     private void Start()
     {
         currentTrackingStatusState = TrackingStatusState.NotSearchingAndNotTracking;
-        objectiveStatusText.text = "Objective";
-        objectiveStatusText.fontSize = 60;
-        currentStatusText.text = "Current";
-        currentStatusText.fontSize = 60;
+        SetRightSideUIToDefault();
     }
 
     private void TrackingStatusUpdate(TrackingStatusState nextTrackingStatusIconState)
@@ -153,27 +150,32 @@ public class View : Listener
                 continueInstructionButton.interactable = true;
                 UpdateText("Great! You just changed the bit from 1 to 0. The two states of a bit can be used to represent many things.", true);
                 UpdateText("Here it's turning this station on and off. I'm going to track your progress over to the right. Tap continue.", false);
-                Invoke("ActivateCurrentStatusText", 5f);
+                currentStatusText.text = "Off";
+                canSetCurrentStatusText = true;
+                objectiveStatusText.text = "";
                 break;
 
             case AppManager.AppState.Tutorial06GoblinRemove: //lesson on how to turn a bit on with a piece of candy
                 continueInstructionButton.interactable = false;
-                UpdateText("Now I'm going to give you an objective in the top right. You just turned the station off and I want you to turn it on.", true);
-                UpdateText("Remove the goblin to turn station on. When your current state matches the objective, click submit button in bottom right.", false);
-                Invoke("ActivateGoalStatusText", 5f);
+                UpdateText("I'm going to give you a goal in the top right. You just turned the station off and I want you to turn it on.", true);
+                UpdateText("Remove the goblin to turn station on. When your current matches goal, click submit button in bottom right.", false);
+                ActivateGoalStatusText("On");
                 break;
                 
             case AppManager.AppState.Tutorial07GoblinPractice: //confirm moving from tutorial to task station
+                submitAnswerButton.interactable = false;
                 continueInstructionButton.interactable = true;
-                UpdateText("Great! You successfully set bits to their 0 and 1 states, and can turn my station on and off in the process.", true);
-                UpdateText("Try turning the station on and off again to get a feel for interacting with a bit. Tap continue to move on to the next lesson.", false);
+                UpdateText("Great! You successfully set bits to their 0 and 1 states, and can turn the station on and off in the process.", true);
+                UpdateText("Try turning the station on and off again to get a feel for interacting with a bit. When ready tap continue.", false);
+                objectiveStatusText.text = "None";
                 break;
-                //turn off current
+
             case AppManager.AppState.Number01StationScanning: //lesson on how to find the task station
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
                 continueInstructionButton.interactable = false;
+                SetRightSideUIToDefault();
                 UpdateText("Let's turn the page and move to the number station. There you will learn to interact with a series of bits.", true);
-                UpdateText("Bits can be combined together to represent numbers for counting. The more bits, the more numbers you can use.", false);
+                UpdateText("Bits can be put together to represent larger numbers. The more bits, the more numbers you can represent.", false);
                 break;
 
             /*
@@ -210,17 +212,26 @@ public class View : Listener
         }
     }
 
-    private void ActivateCurrentStatusText()
+    private void SetRightSideUIToDefault()
     {
+        canSetCurrentStatusText = false;
+        canSetObjectiveStatusText = false;
+        submitAnswerButton.interactable = false;
+        objectiveStatusText.text = "";
+        objectiveStatusText.fontSize = 100;
         currentStatusText.text = "";
-        currentStatusText.fontSize = 60;
+        currentStatusText.fontSize = 100;
+    }
+
+    private void ActivateCurrentStatusText(string currentStatus)
+    {
+        currentStatusText.text = currentStatus;
         canSetCurrentStatusText = true;
     }
 
-    private void ActivateGoalStatusText()
+    private void ActivateGoalStatusText(string currentObjective)
     {
-        objectiveStatusText.text = "";
-        objectiveStatusText.fontSize = 60;
+        objectiveStatusText.text = currentObjective;
         canSetObjectiveStatusText = true;
     }
 
@@ -235,8 +246,8 @@ public class View : Listener
 
     private void SetSubmitButtonStatus()
     {
-        if (currentStatusText.text == objectiveStatusText.text) submitAnswerButton.enabled = true;
-        else submitAnswerButton.enabled = false;
+        if (currentStatusText.text == objectiveStatusText.text) submitAnswerButton.interactable = true;
+        else submitAnswerButton.interactable = false;
     }
 
     public void UpdateText(string newText, bool isTop)

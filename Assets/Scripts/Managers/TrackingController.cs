@@ -239,7 +239,7 @@ public class TrackingController : Listener
             case AppManager.AppState.Number01StationScanning:
                 //removeExistingContent = true;
                 //remove3DContent = true;
-                Invoke("DelayRemoveContent", 6f);
+                Invoke("DelayRemoveContent", 3f);
                 Invoke("TurnOnTracking", 6f);
                 break;
 

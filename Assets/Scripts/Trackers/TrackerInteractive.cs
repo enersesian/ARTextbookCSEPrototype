@@ -19,9 +19,7 @@ public class TrackerInteractive : MonoBehaviour
     {
         thisTrackedImage = transform.parent.GetComponent<TrackedImage>();
         mainTracker = transform.parent.parent.GetChild(0).GetChild(0).GetComponent<TrackerBase>();
-        if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
-        if (transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "";
-        if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "";
+        if (transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "";
         birthTime = Time.time;
     }
 
@@ -67,16 +65,12 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (temp)//currentElementIsBitSetToOne)
         {
-            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "";
-            if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "1";
-            if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
+            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "1";
             currentElementIsBitSetToOne = false;
         }
         else
         {
-            if(transform.GetChild(2).GetComponent<Text>()) transform.GetChild(2).GetComponent<Text>().text = "";
-            if (transform.GetChild(3).GetComponent<Text>()) transform.GetChild(3).GetComponent<Text>().text = "0";
-            if (transform.GetChild(0).GetComponent<Text>()) transform.GetChild(0).GetComponent<Text>().text = "";
+            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "0";
             currentElementIsBitSetToOne = true;
         }
     }
@@ -85,11 +79,11 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (isReady)
         {
-            if(transform.GetChild(1).GetComponent<Image>()) transform.GetChild(1).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(1).GetComponent<Image>().color.a);
+            if(transform.GetChild(0).GetComponent<Image>()) transform.GetChild(0).GetComponent<Image>().color = new Color(0f, 1f, 0f, transform.GetChild(0).GetComponent<Image>().color.a);
         }
         else
         {
-            if(transform.GetChild(1).GetComponent<Image>()) transform.GetChild(1).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(1).GetComponent<Image>().color.a);
+            if(transform.GetChild(0).GetComponent<Image>()) transform.GetChild(0).GetComponent<Image>().color = new Color(1f, 0f, 0f, transform.GetChild(0).GetComponent<Image>().color.a);
             if (GetComponent<EggyInteractive>()) GetComponent<EggyInteractive>().NotifyAppManagerOfLostTracking(); //was used for a removed part of eggy page tutorial
         }
     }

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using GoogleARCore;
 using GoogleARCoreInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TrackerBase : MonoBehaviour
 {
@@ -72,13 +73,31 @@ public class TrackerBase : MonoBehaviour
 
         if (interfaceBits[0] && trackerName == "CookieBit(Clone)")
         {
-            if (isTracking)
+            if (isTracking) //Turn station on
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(13);
+
+                if (gameObject.name == "TaskStation(Clone)")
+                {
+                    transform.GetChild(3).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.green);
+                    transform.GetChild(4).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.green);
+                    transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text = "ON";
+                    transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().fontSize = 76;
+                    transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Image>().color = Color.green;
+                }
             }
-            else
+            else //Turn station off
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(12);
+
+                if (gameObject.name == "TaskStation(Clone)")
+                {
+                    transform.GetChild(3).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red);
+                    transform.GetChild(4).GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.red);
+                    transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().text = "OFF";
+                    transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().fontSize = 76;
+                    transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Image>().color = Color.red;
+                }
             }
             return true;
         }
