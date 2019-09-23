@@ -65,12 +65,19 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (temp)//currentElementIsBitSetToOne)
         {
-            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "1";
+            if(mainTracker.gameObject.name == "TaskStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "1";
+            if (mainTracker.gameObject.name == "NumberStation(Clone)")
+            {
+                if (gameObject.name == "CoffeeBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "1";
+                if (gameObject.name == "CookieBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "2";
+                if (gameObject.name == "CandyBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "4";
+            }
             currentElementIsBitSetToOne = false;
         }
         else
         {
-            if(transform.GetChild(1).GetComponent<Text>()) transform.GetChild(1).GetComponent<Text>().text = "0";
+            if (mainTracker.gameObject.name == "TaskStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "0";
+            if (mainTracker.gameObject.name == "NumberStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "0";
             currentElementIsBitSetToOne = true;
         }
     }

@@ -135,7 +135,6 @@ MonoBehaviour:
   - {fileID: 114522556149224512}
   texts:
   - {fileID: 114842960041911872}
-  - {fileID: 0}
   transitionSpeed: 1
   imageHighestAlpha: 0.3
   repeaterForTrackingStatus: 1

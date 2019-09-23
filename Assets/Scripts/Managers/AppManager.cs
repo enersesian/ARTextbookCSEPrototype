@@ -7,7 +7,11 @@ public class AppManager : MonoBehaviour
 {
     public enum AppState { Eggy01Welcome, Eggy02ResetInstructions, Eggy03ScanningLesson, Eggy04RotatingLesson, Eggy05ActiveTrackingLesson,
         Eggy06InactiveTrackingLesson, Eggy07TrackingExercise, Tutorial01StationScanning, Tutorial02BitScanning, Tutorial03BitExplanation,
-        Tutorial04GoblinAdd, Tutorial05CurrentStateExplanation, Tutorial06GoblinRemove, Tutorial07GoblinPractice, Number01StationScanning };
+        Tutorial04GoblinAdd, Tutorial05CurrentStateExplanation, Tutorial06GoblinRemove, Tutorial07GoblinPractice, Number01StationScanning,
+        Number02FirstBitExplaination, Number02FirstBitScanning, Number03SecondBitExplaination, Number03SecondBitScanning, Number04ThirdBitExplaination,
+        Number04ThirdBitScanning, Number05SugarGoblinIntro, Number06FirstExercise, Number07SecondExercise, Number08ThirdExercise, Number09FourthExercise,
+        Shape01StationScanning
+    };
     public AppState currentAppState;
 
     public enum ActiveStation { Task, Number, Shape, Color, None };
@@ -24,6 +28,8 @@ public class AppManager : MonoBehaviour
 
     private View view;
 
+    private int numberStationCandyBit, numberStationCookieBit, numberStationCoffeeBit;
+
     private void Start() //called after awake to let listeners register first
     {
         view = GetComponent<View>();
@@ -32,8 +38,8 @@ public class AppManager : MonoBehaviour
 
     public void StartApp() //also used with reset input
     {
-        SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
-        //SetAppState(AppState.Tutorial01StationScanning, ActiveStation.None);
+        //SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
+        SetAppState(AppState.Number01StationScanning, ActiveStation.None);
     }
 
     private void SetAppState(AppState tempState, ActiveStation tempStation)
@@ -65,22 +71,22 @@ public class AppManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            InputDetected(1);
+            InputDetected(2);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            InputDetected(6);
+            InputDetected(8);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            InputDetected(12);
+            InputDetected(6);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            InputDetected(13);
+            InputDetected(7);
         }
     }
 
@@ -210,11 +216,302 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Number01StationScanning: //task station index number
+            case AppManager.AppState.Number01StationScanning:
+                if (temp == 2)
+                {
+                    SetAppState(AppState.Number02FirstBitExplaination, ActiveStation.None);
+                    shouldImagebeTracked = true;
+
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number02FirstBitExplaination:
+                if (temp == -1) SetAppState(AppState.Number02FirstBitScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number02FirstBitScanning:
+                if (temp == 8) //tracking coffeeBit
+                {
+                    shouldImagebeTracked = true;
+                    numberStationCandyBit = 0;
+                    numberStationCoffeeBit = 0;
+                    numberStationCookieBit = 0;
+                    SetAppState(AppState.Number03SecondBitExplaination, ActiveStation.None);
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number03SecondBitExplaination:
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == -1) SetAppState(AppState.Number03SecondBitScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number03SecondBitScanning:
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 6) //tracking coffeeBit and cookieBit
+                {
+                    SetAppState(AppState.Number04ThirdBitExplaination, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number04ThirdBitExplaination:
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == -1) SetAppState(AppState.Number04ThirdBitScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number04ThirdBitScanning:
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 7) //tracking coffeeBit, cookieBit, and candyBit
+                {
+                    SetAppState(AppState.Number05SugarGoblinIntro, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number05SugarGoblinIntro: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    numberStationCandyBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    numberStationCandyBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == -1) SetAppState(AppState.Number06FirstExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number06FirstExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    numberStationCandyBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    numberStationCandyBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 16) SetAppState(AppState.Number07SecondExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number07SecondExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    numberStationCandyBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    numberStationCandyBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 16) SetAppState(AppState.Number08ThirdExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number08ThirdExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    numberStationCandyBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    numberStationCandyBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 16) SetAppState(AppState.Number09FourthExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Number09FourthExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    numberStationCandyBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    numberStationCandyBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    numberStationCookieBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    numberStationCookieBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 14) //coffeeBit 0
+                {
+                    numberStationCoffeeBit = 0;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 15) //coffeeBit 1
+                {
+                    numberStationCoffeeBit = 1;
+                    view.SetCurrentStatusText((numberStationCandyBit * 4f + numberStationCookieBit * 2f + numberStationCoffeeBit * 1f).ToString());
+                }
+                if (temp == 16) SetAppState(AppState.Shape01StationScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape01StationScanning:
                 if (temp == 3)
                 {
-                    //SetAppState(AppState.TutorialStationScanning, ActiveStation.None);
+                    //SetAppState(AppState.Number02FirstBitExplaination, ActiveStation.None);
                     shouldImagebeTracked = true;
+
                 }
                 else shouldImagebeTracked = false;
                 break;

@@ -212,6 +212,14 @@ public class TrackingController : Listener
             case AppManager.AppState.Eggy01Welcome: //lesson on using two finger tap to move through app states
             case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
             case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
+            case AppManager.AppState.Number02FirstBitExplaination:
+            case AppManager.AppState.Number03SecondBitExplaination:
+            case AppManager.AppState.Number04ThirdBitExplaination:
+            case AppManager.AppState.Number05SugarGoblinIntro:
+            case AppManager.AppState.Number06FirstExercise:
+            case AppManager.AppState.Number07SecondExercise:
+            case AppManager.AppState.Number08ThirdExercise:
+            case AppManager.AppState.Number09FourthExercise:
             default:
                 shouldControllerBeTracking = false;
                 break;
@@ -219,6 +227,13 @@ public class TrackingController : Listener
             case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
                 ResetTracking(); //can scan tutorial station while user is flipping page and it jumps all over the place so reset its tracking
                 shouldControllerBeTracking = false;
+                break;
+
+            case AppManager.AppState.Number02FirstBitScanning:
+            case AppManager.AppState.Number03SecondBitScanning:
+            case AppManager.AppState.Number04ThirdBitScanning:
+                ResetTracking(); 
+                Invoke("TurnOnTracking", 5f);
                 break;
 
             case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
@@ -237,8 +252,11 @@ public class TrackingController : Listener
 
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
             case AppManager.AppState.Number01StationScanning:
+            case AppManager.AppState.Shape01StationScanning:
                 //removeExistingContent = true;
                 //remove3DContent = true;
+
+                shouldControllerBeTracking = false;
                 Invoke("DelayRemoveContent", 3f);
                 Invoke("TurnOnTracking", 6f);
                 break;

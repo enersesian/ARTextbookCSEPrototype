@@ -49,6 +49,7 @@ public class TrackerBase : MonoBehaviour
     {
 
         if (trackerName == "eggy") interfaceBits[0] = isTracking;
+
         if (gameObject.name == "TaskStation(Clone)" || gameObject.name == "OutputStation(Clone)")
         {
             if (trackerName == "CookieBit(Clone)") interfaceBits[1] = isTracking;
@@ -73,7 +74,7 @@ public class TrackerBase : MonoBehaviour
 
         if (interfaceBits[0] && trackerName == "CookieBit(Clone)")
         {
-            if (isTracking) //Turn station on
+            if (isTracking) //Turn cookie on
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(13);
 
@@ -85,8 +86,13 @@ public class TrackerBase : MonoBehaviour
                     transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().fontSize = 76;
                     transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Image>().color = Color.green;
                 }
+
+                if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
             }
-            else //Turn station off
+            else //Turn cookie off
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(12);
 
@@ -98,30 +104,57 @@ public class TrackerBase : MonoBehaviour
                     transform.GetChild(2).GetChild(0).GetChild(0).GetComponent<Text>().fontSize = 76;
                     transform.GetChild(2).GetChild(0).GetChild(1).GetComponent<Image>().color = Color.red;
                 }
+
+                if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
             }
             return true;
         }
+
         else if (interfaceBits[0] && trackerName == "CandyBit(Clone)")
         {
             if (isTracking)
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(11);
+
+                if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
             }
             else
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(10);
+
+                if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
             }
             return true;
         }
+
         else if (interfaceBits[0] && trackerName == "CoffeeBit(Clone)")
         {
             if (isTracking)
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(15);
+
+                if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
             }
             else
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(14);
+
+                if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
             }
             return true;
         }

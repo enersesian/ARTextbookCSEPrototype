@@ -170,43 +170,98 @@ public class View : Listener
                 objectiveStatusText.text = "None";
                 break;
 
-            case AppManager.AppState.Number01StationScanning: //lesson on how to find the task station
+            case AppManager.AppState.Number01StationScanning:
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
                 continueInstructionButton.interactable = false;
                 SetRightSideUIToDefault();
                 UpdateText("Let's turn the page and move to the number station. There you will learn to interact with a series of bits.", true);
-                UpdateText("Bits can be put together to represent larger numbers. The more bits, the more numbers you can represent.", false);
+                UpdateText("Bits can be put together to represent larger numbers. More bits, the larger numbers you can represent.", false);
                 break;
 
-            /*
-                        case AppManager.AppState.InteractiveScanning:
-                            switch (gameManager.currentStation)
-                            {
-                                case AppManager.ActiveStation.None:
-                                    break;
+            case AppManager.AppState.Number02FirstBitExplaination: 
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                canSetCurrentStatusText = true;
+                UpdateText("Here we have three bits. Each bit represents a power of two, which added together can represent 0-7.", true);
+                UpdateText("The right bit represents 2^0, which is 1, when it is turned on. Press continue to scan bit.", false);
+                break;
 
-                                case AppManager.ActiveStation.Task:
-                                    UpdateText("Welcome to the Task Station Page, swipe finger to rotate station", true);
-                                    break;
+            case AppManager.AppState.Number02FirstBitScanning:
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
+                continueInstructionButton.interactable = false;
+                UpdateText("Scanning for coffee bit...", true);
+                UpdateText("", false);
+                break;
 
-                                case AppManager.ActiveStation.Number:
-                                    UpdateText("Welcome to the Number Station Page, swipe finger to rotate station", true);
-                                    break;
+            case AppManager.AppState.Number03SecondBitExplaination:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                UpdateText("Now the 1 bit is on, so our equation is 0+0+1 = 1. With one bit active, we can represent the numbers 0-1.", true);
+                UpdateText("The center bit represents 2^1, which is 2, when it is turned on. Press continue to scan bit.", false);
+                break;
 
-                                case AppManager.ActiveStation.Shape:
-                                    UpdateText("Welcome to the Shape Station Page, swipe finger to rotate station", true);
-                                    break;
+            case AppManager.AppState.Number03SecondBitScanning: 
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
+                continueInstructionButton.interactable = false;
+                UpdateText("Scanning for cookie bit...", true);
+                UpdateText("", false);
+                break;
 
-                                case AppManager.ActiveStation.Color:
-                                    UpdateText("Welcome to the Color Station Page, swipe finger to rotate station", true);
-                                    break;
-                            }
-                            UpdateText("When done viewing station model, please scan right page to start AR lesson", false);
-                            break;
+            case AppManager.AppState.Number04ThirdBitExplaination: 
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                UpdateText("Now the 2 bit is on, so our equation is 0+2+1 = 3. With two bits active, we can represent the numbers 0-3.", true);
+                UpdateText("The left bit represents 2^2, which is 4, when it is turned on. Press continue to scan bit.", false);
+                break;
 
-                        case AppManager.AppState.Lesson:
-                            break;
-            */
+            case AppManager.AppState.Number04ThirdBitScanning:
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
+                continueInstructionButton.interactable = false;
+                UpdateText("Scanning for candy bit...", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Number05SugarGoblinIntro:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                UpdateText("Now the 4 bit is on, so our equation is 4+2+1 = 7. With three bits active, we can represent the numbers 0-7.", true);
+                UpdateText("Try turning some of the bits off with the sugar goblins to see how the equation changes. Tap continue.", false);
+                break;
+
+            case AppManager.AppState.Number06FirstExercise: 
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = false;
+                objectiveStatusText.text = "2";
+                UpdateText("I need you to solve a series of exercises to fix the number station. Use the recipe book if you need help.", true);
+                UpdateText("The first goal is give me a 2. When you have the correct bits turned on, click the submit button.", false);
+                break;
+
+            case AppManager.AppState.Number07SecondExercise:
+                submitAnswerButton.interactable = false;
+                UpdateText("Great job! Now give me a 5. When you have the correct bits turned on, click the submit button.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Number08ThirdExercise:
+                submitAnswerButton.interactable = false;
+                UpdateText("Great job! Now give me a 3. When you have the correct bits turned on, click the submit button.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Number09FourthExercise:
+                submitAnswerButton.interactable = false;
+                UpdateText("Great job! Now give me a 6. When you have the correct bits turned on, click the submit button.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Shape01StationScanning:
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
+                continueInstructionButton.interactable = false;
+                SetRightSideUIToDefault();
+                UpdateText("You fixed it! Let's turn the page and move to the shape station. You will learn how to use bits as lists.", true);
+                UpdateText("Bits can be put together to represent lists of objects or anything you want the computer to remember for you.", false);
+                break;
+
             default:
                 break;
         }

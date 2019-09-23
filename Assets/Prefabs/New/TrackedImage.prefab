@@ -60,7 +60,7 @@ MonoBehaviour:
   coffeeBit: {fileID: 1752821314149376, guid: d4563cc6ecc606243b94930f963ca8e0, type: 2}
   taskStation: {fileID: 1100913632161178, guid: b7893694dac3d64499bfb890eb28db2b,
     type: 2}
-  numberStation: {fileID: 1913458577490608, guid: 44fc55fa9a0e58f4ea1241d75dfbc464,
+  numberStation: {fileID: 1191039141691318, guid: 21e7b930cd31f314988e3553c4714627,
     type: 2}
   shapeStation: {fileID: 1240190398221920, guid: 5bd03d1405b4ca64497d43daa7b4f261,
     type: 2}
