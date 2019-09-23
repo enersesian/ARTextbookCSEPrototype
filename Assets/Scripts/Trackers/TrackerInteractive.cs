@@ -36,7 +36,8 @@ public class TrackerInteractive : MonoBehaviour
         {
             isFullTracked = true;
             InteractionNotice(true);
-            if(mainTracker.TrackingNotice(gameObject.name, true)) SetBit(true);
+            if (mainTracker.TrackingNotice(gameObject.name, true)) SetBit(true);
+            else ResetBit();
             //transform.GetChild(0).GetComponent<Text>().text = mainTracker.TrackingNotice(gameObject.name, true).ToString();
         }
 
@@ -50,6 +51,7 @@ public class TrackerInteractive : MonoBehaviour
                 isFullTracked = false;
                 InteractionNotice(false);
                 if (mainTracker.TrackingNotice(gameObject.name, false)) SetBit(false);
+                else ResetBit();
                 //transform.GetChild(0).GetComponent<Text>().text = mainTracker.TrackingNotice(gameObject.name, false).ToString();
                 timeSinceFullTrackingMethod = 0f;
             }
@@ -80,6 +82,12 @@ public class TrackerInteractive : MonoBehaviour
             if (mainTracker.gameObject.name == "NumberStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "0";
             currentElementIsBitSetToOne = true;
         }
+    }
+
+    private void ResetBit()
+    {
+        if (mainTracker.gameObject.name == "TaskStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "";
+        if (mainTracker.gameObject.name == "NumberStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "";
     }
 
     private void InteractionNotice(bool isReady)

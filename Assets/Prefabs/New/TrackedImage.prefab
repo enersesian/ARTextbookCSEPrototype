@@ -62,9 +62,9 @@ MonoBehaviour:
     type: 2}
   numberStation: {fileID: 1191039141691318, guid: 21e7b930cd31f314988e3553c4714627,
     type: 2}
-  shapeStation: {fileID: 1240190398221920, guid: 5bd03d1405b4ca64497d43daa7b4f261,
+  shapeStation: {fileID: 1456737264566420, guid: 79fdd8e95d72e63498ad352ad1254483,
     type: 2}
-  colorStation: {fileID: 1461420902961632, guid: 65bef4d03d01d5b4081b8cfe86e0ede2,
+  colorStation: {fileID: 1255753958832320, guid: 8cb0276553645a74aa66ecaa5f37607d,
     type: 2}
   outputStation: {fileID: 0}
   thisImageDatabaseElement: 0

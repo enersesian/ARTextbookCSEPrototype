@@ -167,7 +167,7 @@ public class View : Listener
                 continueInstructionButton.interactable = true;
                 UpdateText("Great! You successfully set bits to their 0 and 1 states, and can turn the station on and off in the process.", true);
                 UpdateText("Try turning the station on and off again to get a feel for interacting with a bit. When ready tap continue.", false);
-                objectiveStatusText.text = "None";
+                objectiveStatusText.text = "";
                 break;
 
             case AppManager.AppState.Number01StationScanning:
@@ -183,13 +183,13 @@ public class View : Listener
                 continueInstructionButton.interactable = true;
                 canSetCurrentStatusText = true;
                 UpdateText("Here we have three bits. Each bit represents a power of two, which added together can represent 0-7.", true);
-                UpdateText("The right bit represents 2^0, which is 1, when it is turned on. Press continue to scan bit.", false);
+                UpdateText("The coffee bit on right represents 2^0, which is 1, when it is turned on. Press continue to scan bit.", false);
                 break;
 
             case AppManager.AppState.Number02FirstBitScanning:
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
                 continueInstructionButton.interactable = false;
-                UpdateText("Scanning for coffee bit...", true);
+                UpdateText("Scanning for coffee bit on right...please zoom in to the coffee bit if not scanning.", true);
                 UpdateText("", false);
                 break;
 
@@ -197,28 +197,28 @@ public class View : Listener
                 TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
                 continueInstructionButton.interactable = true;
                 UpdateText("Now the 1 bit is on, so our equation is 0+0+1 = 1. With one bit active, we can represent the numbers 0-1.", true);
-                UpdateText("The center bit represents 2^1, which is 2, when it is turned on. Press continue to scan bit.", false);
+                UpdateText("Try using the goblin to turn the 1 bit on and off to see the results. Press continue to scan the 2 bit.", false);
                 break;
 
             case AppManager.AppState.Number03SecondBitScanning: 
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
                 continueInstructionButton.interactable = false;
-                UpdateText("Scanning for cookie bit...", true);
-                UpdateText("", false);
+                UpdateText("The cookie bit represents 2^1, which is 2, when it is turned on. It can represent 0 or 2.", true);
+                UpdateText("Scanning for cookie bit in middle...please zoom in to the cookie bit if not scanning.", false);
                 break;
 
             case AppManager.AppState.Number04ThirdBitExplaination: 
                 TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
                 continueInstructionButton.interactable = true;
                 UpdateText("Now the 2 bit is on, so our equation is 0+2+1 = 3. With two bits active, we can represent the numbers 0-3.", true);
-                UpdateText("The left bit represents 2^2, which is 4, when it is turned on. Press continue to scan bit.", false);
+                UpdateText("Try using the goblin to turn the 2 bit on and off to see the results. Press continue to scan the 4 bit.", false);
                 break;
 
             case AppManager.AppState.Number04ThirdBitScanning:
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
                 continueInstructionButton.interactable = false;
-                UpdateText("Scanning for candy bit...", true);
-                UpdateText("", false);
+                UpdateText("The candy bit represents 2^2, which is 4, when it is turned on. It can represent 0 or 4. ", true);
+                UpdateText("Scanning for candy bit on left...please zoom in to the candy bit if not scanning.", false);
                 break;
 
             case AppManager.AppState.Number05SugarGoblinIntro:
@@ -238,18 +238,21 @@ public class View : Listener
 
             case AppManager.AppState.Number07SecondExercise:
                 submitAnswerButton.interactable = false;
+                objectiveStatusText.text = "5";
                 UpdateText("Great job! Now give me a 5. When you have the correct bits turned on, click the submit button.", true);
                 UpdateText("", false);
                 break;
 
             case AppManager.AppState.Number08ThirdExercise:
                 submitAnswerButton.interactable = false;
+                objectiveStatusText.text = "3";
                 UpdateText("Great job! Now give me a 3. When you have the correct bits turned on, click the submit button.", true);
                 UpdateText("", false);
                 break;
 
             case AppManager.AppState.Number09FourthExercise:
                 submitAnswerButton.interactable = false;
+                objectiveStatusText.text = "6";
                 UpdateText("Great job! Now give me a 6. When you have the correct bits turned on, click the submit button.", true);
                 UpdateText("", false);
                 break;
@@ -257,9 +260,84 @@ public class View : Listener
             case AppManager.AppState.Shape01StationScanning:
                 TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
                 continueInstructionButton.interactable = false;
+                submitAnswerButton.interactable = false;
                 SetRightSideUIToDefault();
                 UpdateText("You fixed it! Let's turn the page and move to the shape station. You will learn how to use bits as lists.", true);
                 UpdateText("Bits can be put together to represent lists of objects or anything you want the computer to remember for you.", false);
+                break;
+
+            case AppManager.AppState.Shape02StationExplaination:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                UpdateText("Here we have two bits. We learned that two bits can represent 0-3, so we can make a list of four objects.", true);
+                UpdateText("Notice on the shape station we have a list of four shapes. Let's learn how to use the bits. Press continue.", false);
+                break;
+
+            case AppManager.AppState.Shape03FirstBitExplaination:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                UpdateText("The list is a combination of two bits in their different states, 0 and 1. We will use the candy and cookie bit.", true);
+                UpdateText("The cookie bit represents the right bit in the list. Press continue to scan the cookie bit on the right.", false);
+                break;
+
+            case AppManager.AppState.Shape04FirstBitScanning:
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
+                continueInstructionButton.interactable = false;
+                UpdateText("Scanning for cookie bit on right...please zoom in to the cookie bit if not scanning.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Shape05SecondBitExplaination:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                canSetCurrentStatusText = true;
+                UpdateText("Try turning the cookie bit on and off with the goblin and see how it changes your current results.", true);
+                UpdateText("The candy bit represents the left bit in the list. Press continue to scan the candy bit on the left.", false);
+                break;
+
+            case AppManager.AppState.Shape06SecondBitScanning:
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableContinued);
+                continueInstructionButton.interactable = false;
+                UpdateText("Scanning for candy bit on left...please zoom in to the candy bit if not scanning.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Shape07FinalExplaination:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = true;
+                UpdateText("Try turning the candy bit on and off with the goblin and see how it changes your current results.", true);
+                UpdateText("Now that you can represent all shapes in the list, lets start the exercises. Press continue.", false);
+                break;
+
+            case AppManager.AppState.Shape08FirstExercise:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                continueInstructionButton.interactable = false;
+                objectiveStatusText.text = "sphere";
+                UpdateText("I need you to solve a series of exercises to fix the shape station. Use the list if you need help.", true);
+                UpdateText("The first goal is give me a sphere. When you have the correct bits turned on, click the submit button.", false);
+                break;
+
+            case AppManager.AppState.Shape09SecondExercise:
+                submitAnswerButton.interactable = false;
+                objectiveStatusText.text = "donut";
+                UpdateText("Great job! Now give me a donut. When you have the correct bits turned on, click the submit button.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Shape10ThirdExercise:
+                submitAnswerButton.interactable = false;
+                objectiveStatusText.text = "cone";
+                UpdateText("Great job! Now give me a cone. When you have the correct bits turned on, click the submit button.", true);
+                UpdateText("", false);
+                break;
+
+            case AppManager.AppState.Color01StationScanning:
+                TrackingStatusUpdate(TrackingStatusState.SearchingForATrackableNew);
+                continueInstructionButton.interactable = false;
+                submitAnswerButton.interactable = false;
+                SetRightSideUIToDefault();
+                UpdateText("You fixed it! Let's turn the page and move to the color station. You will learn to combine numbers and lists.", true);
+                UpdateText("Bits can represent a range of numbers and a list of objects. This is useful for colors. Click continue.", false);
                 break;
 
             default:
