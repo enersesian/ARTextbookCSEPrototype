@@ -74,12 +74,18 @@ public class TrackerInteractive : MonoBehaviour
                 if (gameObject.name == "CookieBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "2";
                 if (gameObject.name == "CandyBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "4";
             }
+            if (mainTracker.gameObject.name == "ShapeStation(Clone)")
+            {
+                if (gameObject.name == "CookieBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "1";
+                if (gameObject.name == "CandyBit(Clone)") transform.GetChild(1).GetComponent<Text>().text = "1";
+            }
             currentElementIsBitSetToOne = false;
         }
         else
         {
             if (mainTracker.gameObject.name == "TaskStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "0";
             if (mainTracker.gameObject.name == "NumberStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "0";
+            if (mainTracker.gameObject.name == "ShapeStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "0";
             currentElementIsBitSetToOne = true;
         }
     }
@@ -88,6 +94,7 @@ public class TrackerInteractive : MonoBehaviour
     {
         if (mainTracker.gameObject.name == "TaskStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "";
         if (mainTracker.gameObject.name == "NumberStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "";
+        if (mainTracker.gameObject.name == "ShapeStation(Clone)") transform.GetChild(1).GetComponent<Text>().text = "";
     }
 
     private void InteractionNotice(bool isReady)

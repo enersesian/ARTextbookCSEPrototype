@@ -91,6 +91,11 @@ public class TrackerBase : MonoBehaviour
                 {
 
                 }
+
+                if (gameObject.name == "ShapeStation(Clone)")
+                {
+
+                }
             }
             else //Turn cookie off
             {
@@ -109,6 +114,11 @@ public class TrackerBase : MonoBehaviour
                 {
 
                 }
+
+                if (gameObject.name == "ShapeStation(Clone)")
+                {
+
+                }
             }
             return true;
         }
@@ -123,12 +133,22 @@ public class TrackerBase : MonoBehaviour
                 {
 
                 }
+
+                if (gameObject.name == "ShapeStation(Clone)")
+                {
+
+                }
             }
             else
             {
                 transform.parent.parent.GetComponent<AppManager>().InputDetected(10);
 
                 if (gameObject.name == "NumberStation(Clone)")
+                {
+
+                }
+
+                if (gameObject.name == "ShapeStation(Clone)")
                 {
 
                 }

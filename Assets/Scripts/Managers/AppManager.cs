@@ -10,7 +10,9 @@ public class AppManager : MonoBehaviour
         Tutorial04GoblinAdd, Tutorial05CurrentStateExplanation, Tutorial06GoblinRemove, Tutorial07GoblinPractice, Number01StationScanning,
         Number02FirstBitExplaination, Number02FirstBitScanning, Number03SecondBitExplaination, Number03SecondBitScanning, Number04ThirdBitExplaination,
         Number04ThirdBitScanning, Number05SugarGoblinIntro, Number06FirstExercise, Number07SecondExercise, Number08ThirdExercise, Number09FourthExercise,
-        Shape01StationScanning
+        Shape01StationScanning, Shape02StationExplaination, Shape03FirstBitExplaination, Shape04FirstBitScanning, Shape05SecondBitExplaination,
+        Shape06SecondBitScanning, Shape07FinalExplaination, Shape08FirstExercise, Shape09SecondExercise, Shape10ThirdExercise,
+        Color01StationScanning
     };
     public AppState currentAppState;
 
@@ -519,6 +521,8 @@ public class AppManager : MonoBehaviour
             default:
                 shouldImagebeTracked = false;
                 break;
+
+                //add all shape station cases
         }
         textTrackingState.text = temp.ToString() + " " + shouldImagebeTracked.ToString();
         return shouldImagebeTracked;

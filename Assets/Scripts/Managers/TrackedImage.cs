@@ -67,7 +67,7 @@ public class TrackedImage : Listener
                 break;
             case 5:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "outputStation";
-                currentElement = Instantiate(colorStation, transform.position, transform.rotation);
+                currentElement = Instantiate(outputStation, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
                 break;

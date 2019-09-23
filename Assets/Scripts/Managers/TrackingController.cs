@@ -209,6 +209,8 @@ public class TrackingController : Listener
     {
         switch (gameManager.currentAppState)
         {
+            //add all shape station cases
+
             case AppManager.AppState.Eggy01Welcome: //lesson on using two finger tap to move through app states
             case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
             case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
