@@ -12,7 +12,7 @@ public class AppManager : MonoBehaviour
         Number04ThirdBitScanning, Number05SugarGoblinIntro, Number06FirstExercise, Number07SecondExercise, Number08ThirdExercise, Number09FourthExercise,
         Shape01StationScanning, Shape02StationExplaination, Shape03FirstBitExplaination, Shape04FirstBitScanning, Shape05SecondBitExplaination,
         Shape06SecondBitScanning, Shape07FinalExplaination, Shape08FirstExercise, Shape09SecondExercise, Shape10ThirdExercise,
-        Color01StationScanning
+        Color01StationScanning, Color02StationExplanation
     };
     public AppState currentAppState;
 
@@ -30,7 +30,7 @@ public class AppManager : MonoBehaviour
 
     private View view;
 
-    private int numberStationCandyBit, numberStationCookieBit, numberStationCoffeeBit;
+    private int numberStationCandyBit, numberStationCookieBit, numberStationCoffeeBit, shapeStationCookieBit, shapeStationCandyBit;
 
     private void Start() //called after awake to let listeners register first
     {
@@ -40,8 +40,8 @@ public class AppManager : MonoBehaviour
 
     public void StartApp() //also used with reset input
     {
-        //SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
-        SetAppState(AppState.Number01StationScanning, ActiveStation.None);
+        SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
+        //SetAppState(AppState.Shape01StationScanning, ActiveStation.None);
     }
 
     private void SetAppState(AppState tempState, ActiveStation tempStation)
@@ -511,18 +511,210 @@ public class AppManager : MonoBehaviour
             case AppManager.AppState.Shape01StationScanning:
                 if (temp == 3)
                 {
-                    //SetAppState(AppState.Number02FirstBitExplaination, ActiveStation.None);
+                    SetAppState(AppState.Shape02StationExplaination, ActiveStation.None);
                     shouldImagebeTracked = true;
 
                 }
                 else shouldImagebeTracked = false;
                 break;
 
-            default:
+            case AppManager.AppState.Shape02StationExplaination:
+                if (temp == -1) SetAppState(AppState.Shape03FirstBitExplaination, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-                //add all shape station cases
+            case AppManager.AppState.Shape03FirstBitExplaination:
+                if (temp == -1) SetAppState(AppState.Shape04FirstBitScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape04FirstBitScanning:
+                if (temp == 6) //tracking cookieBit
+                {
+                    shouldImagebeTracked = true;
+                    shapeStationCandyBit = 0;
+                    shapeStationCookieBit = 0;
+                    SetAppState(AppState.Shape05SecondBitExplaination, ActiveStation.None);
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape05SecondBitExplaination:
+                if (temp == 12) //cookieBit 0
+                {
+                    shapeStationCookieBit = 0;
+                    if(shapeStationCandyBit == 1) view.SetCurrentStatusText("cone"); //10
+                    else view.SetCurrentStatusText("cube"); //00
+
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    shapeStationCookieBit = 1;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("sphere"); //01
+                }
+                if (temp == -1) SetAppState(AppState.Shape06SecondBitScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape06SecondBitScanning:
+                if (temp == 12) //cookieBit 0
+                {
+                    shapeStationCookieBit = 0;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("cone"); //10
+                    else view.SetCurrentStatusText("cube"); //00
+
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    shapeStationCookieBit = 1;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("sphere"); //01
+                }
+                if (temp == 7) //tracking candyBit and cookieBit
+                {
+                    SetAppState(AppState.Shape07FinalExplaination, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape07FinalExplaination:
+                if (temp == 10) //candyBit 0
+                {
+                    shapeStationCandyBit = 0;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("sphere"); //01
+                    else view.SetCurrentStatusText("cube"); //00
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    shapeStationCandyBit = 1;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("cone"); //10
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    shapeStationCookieBit = 0;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("cone"); //10
+                    else view.SetCurrentStatusText("cube"); //00
+
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    shapeStationCookieBit = 1;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("sphere"); //01
+                }
+                if (temp == -1) SetAppState(AppState.Shape08FirstExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape08FirstExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    shapeStationCandyBit = 0;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("sphere"); //01
+                    else view.SetCurrentStatusText("cube"); //00
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    shapeStationCandyBit = 1;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("cone"); //10
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    shapeStationCookieBit = 0;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("cone"); //10
+                    else view.SetCurrentStatusText("cube"); //00
+
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    shapeStationCookieBit = 1;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("sphere"); //01
+                }
+                if (temp == 16) SetAppState(AppState.Shape09SecondExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape09SecondExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    shapeStationCandyBit = 0;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("sphere"); //01
+                    else view.SetCurrentStatusText("cube"); //00
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    shapeStationCandyBit = 1;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("cone"); //10
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    shapeStationCookieBit = 0;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("cone"); //10
+                    else view.SetCurrentStatusText("cube"); //00
+
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    shapeStationCookieBit = 1;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("sphere"); //01
+                }
+                if (temp == 16) SetAppState(AppState.Shape10ThirdExercise, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Shape10ThirdExercise: //two finger touch
+                if (temp == 10) //candyBit 0
+                {
+                    shapeStationCandyBit = 0;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("sphere"); //01
+                    else view.SetCurrentStatusText("cube"); //00
+                }
+                if (temp == 11) //candyBit 1
+                {
+                    shapeStationCandyBit = 1;
+                    if (shapeStationCookieBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("cone"); //10
+                }
+                if (temp == 12) //cookieBit 0
+                {
+                    shapeStationCookieBit = 0;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("cone"); //10
+                    else view.SetCurrentStatusText("cube"); //00
+
+                }
+                if (temp == 13) //cookieBit 1
+                {
+                    shapeStationCookieBit = 1;
+                    if (shapeStationCandyBit == 1) view.SetCurrentStatusText("ring"); //11
+                    else view.SetCurrentStatusText("sphere"); //01
+                }
+                if (temp == 16) SetAppState(AppState.Color01StationScanning, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Color01StationScanning:
+                if (temp == 4)
+                {
+                    SetAppState(AppState.Color02StationExplanation, ActiveStation.None);
+                    shouldImagebeTracked = true;
+                }
+                else shouldImagebeTracked = false;
+                break;
+
+            case AppManager.AppState.Color02StationExplanation:
+                //if (temp == -1) SetAppState(AppState.Shape03FirstBitExplaination, ActiveStation.None);
+                shouldImagebeTracked = false;
+                break;
+
+                //add all color station cases
+                //add output station conclusion case
         }
         textTrackingState.text = temp.ToString() + " " + shouldImagebeTracked.ToString();
         return shouldImagebeTracked;

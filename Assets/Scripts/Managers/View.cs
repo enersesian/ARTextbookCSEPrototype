@@ -115,8 +115,8 @@ public class View : Listener
 
             case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
                 continueInstructionButton.interactable = true;
-                UpdateText("Frame up my image so that you can track me along with the candy. My belt will glow green when I'm tracked.", true);
-                UpdateText("Now practice getting both of the candy and me tracked well and glowing green. When ready, please tap continue.", false);
+                UpdateText("Frame up on my image so you can track me with the candy. My belt will glow green when I'm tracked.", true);
+                UpdateText("Now practice getting both the candy and me tracked and glowing green. When ready, please tap continue.", false);
                 break;
 
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
@@ -263,7 +263,7 @@ public class View : Listener
                 submitAnswerButton.interactable = false;
                 SetRightSideUIToDefault();
                 UpdateText("You fixed it! Let's turn the page and move to the shape station. You will learn how to use bits as lists.", true);
-                UpdateText("Bits can be put together to represent lists of objects or anything you want the computer to remember for you.", false);
+                UpdateText("Bits can be put together to represent lists of objects you want the computer to remember for you.", false);
                 break;
 
             case AppManager.AppState.Shape02StationExplaination:
@@ -291,6 +291,8 @@ public class View : Listener
                 TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
                 continueInstructionButton.interactable = true;
                 canSetCurrentStatusText = true;
+                objectiveStatusText.fontSize = 70;
+                currentStatusText.fontSize = 70;
                 UpdateText("Try turning the cookie bit on and off with the goblin and see how it changes your current results.", true);
                 UpdateText("The candy bit represents the left bit in the list. Press continue to scan the candy bit on the left.", false);
                 break;
@@ -319,8 +321,8 @@ public class View : Listener
 
             case AppManager.AppState.Shape09SecondExercise:
                 submitAnswerButton.interactable = false;
-                objectiveStatusText.text = "donut";
-                UpdateText("Great job! Now give me a donut. When you have the correct bits turned on, click the submit button.", true);
+                objectiveStatusText.text = "ring";
+                UpdateText("Great job! Now give me a ring. When you have the correct bits turned on, click the submit button.", true);
                 UpdateText("", false);
                 break;
 
@@ -338,6 +340,12 @@ public class View : Listener
                 SetRightSideUIToDefault();
                 UpdateText("You fixed it! Let's turn the page and move to the color station. You will learn to combine numbers and lists.", true);
                 UpdateText("Bits can represent a range of numbers and a list of objects. This is useful for colors. Click continue.", false);
+                break;
+
+            case AppManager.AppState.Color02StationExplanation:
+                TrackingStatusUpdate(TrackingStatusState.TrackedAtLeastOneTrackable);
+                UpdateText("This is as far as we got for the OC6 demo. Thank you for trying our AR version of C-Spresso.", true);
+                UpdateText("Please try out VR version of C-Spresso on Oculus Quest which is a complete binary math level.", false);
                 break;
 
             default:

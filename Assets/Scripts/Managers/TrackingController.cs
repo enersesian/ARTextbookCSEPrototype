@@ -222,7 +222,16 @@ public class TrackingController : Listener
             case AppManager.AppState.Number07SecondExercise:
             case AppManager.AppState.Number08ThirdExercise:
             case AppManager.AppState.Number09FourthExercise:
+            case AppManager.AppState.Shape02StationExplaination:
+            case AppManager.AppState.Shape03FirstBitExplaination:
+            case AppManager.AppState.Shape05SecondBitExplaination:
+            case AppManager.AppState.Shape07FinalExplaination:
+            case AppManager.AppState.Shape08FirstExercise:
+            case AppManager.AppState.Shape09SecondExercise:
+            case AppManager.AppState.Shape10ThirdExercise:
+            case AppManager.AppState.Color02StationExplanation:
             default:
+                ResetTracking();
                 shouldControllerBeTracking = false;
                 break;
 
@@ -234,6 +243,8 @@ public class TrackingController : Listener
             case AppManager.AppState.Number02FirstBitScanning:
             case AppManager.AppState.Number03SecondBitScanning:
             case AppManager.AppState.Number04ThirdBitScanning:
+            case AppManager.AppState.Shape04FirstBitScanning:
+            case AppManager.AppState.Shape06SecondBitScanning:
                 ResetTracking(); 
                 Invoke("TurnOnTracking", 5f);
                 break;
@@ -255,6 +266,7 @@ public class TrackingController : Listener
             case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
             case AppManager.AppState.Number01StationScanning:
             case AppManager.AppState.Shape01StationScanning:
+            case AppManager.AppState.Color01StationScanning:
                 //removeExistingContent = true;
                 //remove3DContent = true;
 
@@ -265,12 +277,11 @@ public class TrackingController : Listener
 
             //dont need to be scanning for new targets
             case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
-                ResetTracking();
-                break;
             case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
             case AppManager.AppState.Tutorial05CurrentStateExplanation:
             case AppManager.AppState.Tutorial06GoblinRemove:
             case AppManager.AppState.Tutorial07GoblinPractice: //confirm moving from tutorial to task station
+                ResetTracking();
                 break;
         }
     }
