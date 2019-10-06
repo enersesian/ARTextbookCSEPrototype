@@ -15,32 +15,40 @@ public class AppManager : MonoBehaviour
         Color01StationScanning, Color02StationExplanation
     };
     public AppState currentAppState;
-
     public enum ActiveStation { Task, Number, Shape, Color, None };
     public ActiveStation currentStation;
-
     public enum InteractiveState { NotFound, NotActive, Active};
-    public InteractiveState[] currentInteractiveState = new InteractiveState[3]; //up to 3 markers in an exercise
-
-    private List<Listener> listeners = new List<Listener>();
-
-    private bool shouldRespondToUserInput = true, shouldImagebeTracked;
-
+    //up to 3 markers in an exercise
+    public InteractiveState[] currentInteractiveState = new InteractiveState[3]; 
     public Text textAppState, textTrackingState, textLastSpawned;
 
+    private List<Listener> listeners = new List<Listener>();
+    private bool shouldRespondToUserInput = true, shouldImagebeTracked;
     private View view;
-
     private int numberStationCandyBit, numberStationCookieBit, numberStationCoffeeBit, shapeStationCookieBit, shapeStationCandyBit;
 
-    private void Start() //called after awake to let listeners register first
+    //called after awake to let listeners register first
+    private void Start() 
     {
         view = GetComponent<View>();
         StartApp();
     }
 
-    public void StartApp() //also used with reset input
+    private void Update()
+    {
+        /*Used for testing out pages' sequence of actions from within editor
+        if (Input.GetKeyDown(KeyCode.Alpha1)) InputDetected(2);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) InputDetected(8);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) InputDetected(6);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) InputDetected(7);
+        */
+    }
+
+    //also used with reset input
+    public void StartApp()
     {
         SetAppState(AppState.Eggy01Welcome, ActiveStation.None);
+        //Used with the input key commands in update loop to test out each page's interactives in editor
         //SetAppState(AppState.Shape01StationScanning, ActiveStation.None);
     }
 
@@ -69,29 +77,6 @@ public class AppManager : MonoBehaviour
         listeners.Add(newListener);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            InputDetected(2);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            InputDetected(8);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            InputDetected(6);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            InputDetected(7);
-        }
-    }
-
     public bool InputDetected(int temp)
     {
         //-1 two finger touch
@@ -108,12 +93,12 @@ public class AppManager : MonoBehaviour
 
         switch (currentAppState)
         {
-            case AppManager.AppState.Eggy01Welcome: //two finger touch
+            case AppManager.AppState.Eggy01Welcome: //continue button pressed
                 if (temp == -1) SetAppState(AppState.Eggy02ResetInstructions, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Eggy02ResetInstructions: //two finger touch
+            case AppManager.AppState.Eggy02ResetInstructions: //continue button pressed
                 if (temp == -1) SetAppState(AppState.Eggy03ScanningLesson, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
@@ -127,12 +112,12 @@ public class AppManager : MonoBehaviour
                 else shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Eggy04RotatingLesson: //two finger touch
+            case AppManager.AppState.Eggy04RotatingLesson: //continue button pressed
                 if (temp == -1) SetAppState(AppState.Eggy05ActiveTrackingLesson, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Eggy05ActiveTrackingLesson: //center cart index number
+            case AppManager.AppState.Eggy05ActiveTrackingLesson: //candy interactive index number
                 if (temp == 7)
                 {
                     shouldImagebeTracked = true;
@@ -141,12 +126,12 @@ public class AppManager : MonoBehaviour
                 else shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Eggy06InactiveTrackingLesson: //center cart lost tracking
+            case AppManager.AppState.Eggy06InactiveTrackingLesson: //candy interactive lost tracking
                 if (temp == -1) SetAppState(AppState.Eggy07TrackingExercise, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Eggy07TrackingExercise: //two finger touch
+            case AppManager.AppState.Eggy07TrackingExercise: //continue button pressed
                 if (temp == -1) SetAppState(AppState.Tutorial01StationScanning, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
@@ -160,7 +145,7 @@ public class AppManager : MonoBehaviour
                 else shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Tutorial02BitScanning: //center cart index number
+            case AppManager.AppState.Tutorial02BitScanning: //continue button pressed
                 if (temp == -1) SetAppState(AppState.Tutorial03BitExplanation, ActiveStation.None);
                 else shouldImagebeTracked = false;
                 break;
@@ -174,7 +159,7 @@ public class AppManager : MonoBehaviour
                 else shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Tutorial04GoblinAdd: //center cart tracking becomes inactive, ie bit turns to 0
+            case AppManager.AppState.Tutorial04GoblinAdd: //cookie tracking becomes inactive, ie bit turns to 0
                 if (temp == 12) SetAppState(AppState.Tutorial05CurrentStateExplanation, ActiveStation.None);
                 shouldImagebeTracked = false;
                 break;
@@ -192,7 +177,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Tutorial06GoblinRemove: //center cart tracking becomes active, ie bit turns to 1 AND user clicks submit button
+            case AppManager.AppState.Tutorial06GoblinRemove: //cookie tracking becomes active, ie bit turns to 1 AND user clicks submit button
                 if (temp == 12)
                 {
                     view.SetCurrentStatusText("Off");
@@ -205,7 +190,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Tutorial07GoblinPractice: //two finger touch
+            case AppManager.AppState.Tutorial07GoblinPractice: //continue button pressed
                 if (temp == 12)
                 {
                     view.SetCurrentStatusText("Off");
@@ -333,7 +318,7 @@ public class AppManager : MonoBehaviour
                 else shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Number05SugarGoblinIntro: //two finger touch
+            case AppManager.AppState.Number05SugarGoblinIntro: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     numberStationCandyBit = 0;
@@ -368,7 +353,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Number06FirstExercise: //two finger touch
+            case AppManager.AppState.Number06FirstExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     numberStationCandyBit = 0;
@@ -403,7 +388,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Number07SecondExercise: //two finger touch
+            case AppManager.AppState.Number07SecondExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     numberStationCandyBit = 0;
@@ -438,7 +423,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Number08ThirdExercise: //two finger touch
+            case AppManager.AppState.Number08ThirdExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     numberStationCandyBit = 0;
@@ -473,7 +458,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Number09FourthExercise: //two finger touch
+            case AppManager.AppState.Number09FourthExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     numberStationCandyBit = 0;
@@ -609,7 +594,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Shape08FirstExercise: //two finger touch
+            case AppManager.AppState.Shape08FirstExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     shapeStationCandyBit = 0;
@@ -639,7 +624,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Shape09SecondExercise: //two finger touch
+            case AppManager.AppState.Shape09SecondExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     shapeStationCandyBit = 0;
@@ -669,7 +654,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
-            case AppManager.AppState.Shape10ThirdExercise: //two finger touch
+            case AppManager.AppState.Shape10ThirdExercise: //continue button pressed
                 if (temp == 10) //candyBit 0
                 {
                     shapeStationCandyBit = 0;
@@ -713,6 +698,7 @@ public class AppManager : MonoBehaviour
                 shouldImagebeTracked = false;
                 break;
 
+                //this is as far as I got for OC6 demo, need to:
                 //add all color station cases
                 //add output station conclusion case
         }
@@ -722,9 +708,10 @@ public class AppManager : MonoBehaviour
 
     public void UserInputDetected()
     {
+        //setup a 3 second wait between continue button pressed to avoid user spamming button
         if(shouldRespondToUserInput)
         {
-            InputDetected(-1);//code for 2 finger touch
+            InputDetected(-1);//code for continue button pressed
             shouldRespondToUserInput = false;
             Invoke("ActivateUserInput", 3f);
         }

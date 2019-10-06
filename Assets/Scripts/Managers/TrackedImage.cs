@@ -1,24 +1,16 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using GoogleARCore;
-using GoogleARCoreInternal;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Used to track elements on an AR book page
 /// </summary>
 public class TrackedImage : Listener
 {
-    /// <summary>
-    /// The AugmentedImage to visualize.
-    /// </summary>
     public AugmentedImage image;
     public Anchor anchor;
-
     public GameObject eggy, eggyInteractive, candyBit, cookieBit, coffeeBit, taskStation, numberStation, shapeStation, colorStation, outputStation;
-
     public static TrackedImage[] imageDatabaseElement = new TrackedImage[9];
     public int thisImageDatabaseElement;
 
@@ -39,7 +31,6 @@ public class TrackedImage : Listener
                 currentElement = Instantiate(eggy, transform.position, transform.rotation);
                 currentElement.GetComponent<ITransition>().TurnOn();
                 currentElement.transform.parent = transform;
-                //currentElement.transform.GetChild(0).GetComponent<Animator>().SetTrigger("handsUp");
                 break;
             case 1:
                 imageTrackingController.gameObject.GetComponent<AppManager>().textLastSpawned.text = "taskStation";

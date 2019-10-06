@@ -9,10 +9,10 @@ public class Transition_UI : MonoBehaviour, ITransition
     public Image[] images;
     public Text[] texts;
     public float transitionSpeed;
-    private bool isOn;
-
     public float imageHighestAlpha;
     public bool repeaterForTrackingStatus = true;
+
+    private bool isOn;
 
     public void TurnOff()
     {
@@ -25,7 +25,8 @@ public class Transition_UI : MonoBehaviour, ITransition
         }
     }
 
-    public void TurnOn(float tempWaitTime) //overloaded operator in case need a wait time
+    //overloaded operator in case need a wait time
+    public void TurnOn(float tempWaitTime) 
     {
         repeaterForTrackingStatus = true;
         Invoke("TurnOn", tempWaitTime);

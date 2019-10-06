@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using GoogleARCore;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Controller for AugmentedImage example.
@@ -18,24 +17,14 @@ using UnityEngine.UI;
 /// </remarks>
 public class TrackingController : Listener
 {
-    /// <summary>
-    /// A prefab for visualizing an AugmentedImage.
-    /// </summary>
     public TrackedImage TrackedImagePrefab;
 
     private Dictionary<int, TrackedImage> m_TrackedImages
         = new Dictionary<int, TrackedImage>();
-
     private List<AugmentedImage> m_TempAugmentedImages = new List<AugmentedImage>();
-
     private TrackedImage currentlyTracked;
-
-    private bool[] isImageTracked = new bool[7];
     private bool shouldImageBeTracked, shouldControllerBeTracking, removeExistingContent, remove3DContent;
 
-    /// <summary>
-    /// The Unity Awake() method.
-    /// </summary>
     public new void Awake()
     {
         // Enable ARCore to target 60fps camera capture frame rate on supported devices.
@@ -43,27 +32,92 @@ public class TrackingController : Listener
         Application.targetFrameRate = 60;
     }
 
-    public void ResetTracking()
+    public override void SetListenerState()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        switch (gameManager.currentAppState)
         {
-            transform.GetChild(i).GetComponent<TrackedImage>().anchor = transform.GetChild(i).GetComponent<TrackedImage>().image.CreateAnchor(transform.GetChild(i).GetComponent<TrackedImage>().image.CenterPose);
-            transform.GetChild(i).position = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.position;
-            transform.GetChild(i).rotation = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.rotation;
+            case AppManager.AppState.Eggy01Welcome: //lesson on using two finger tap to move through app states
+            case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
+            case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
+            case AppManager.AppState.Number02FirstBitExplaination:
+            case AppManager.AppState.Number03SecondBitExplaination:
+            case AppManager.AppState.Number04ThirdBitExplaination:
+            case AppManager.AppState.Number05SugarGoblinIntro:
+            case AppManager.AppState.Number06FirstExercise:
+            case AppManager.AppState.Number07SecondExercise:
+            case AppManager.AppState.Number08ThirdExercise:
+            case AppManager.AppState.Number09FourthExercise:
+            case AppManager.AppState.Shape02StationExplaination:
+            case AppManager.AppState.Shape03FirstBitExplaination:
+            case AppManager.AppState.Shape05SecondBitExplaination:
+            case AppManager.AppState.Shape07FinalExplaination:
+            case AppManager.AppState.Shape08FirstExercise:
+            case AppManager.AppState.Shape09SecondExercise:
+            case AppManager.AppState.Shape10ThirdExercise:
+            case AppManager.AppState.Color02StationExplanation:
+            default:
+                ResetTracking();
+                shouldControllerBeTracking = false;
+                break;
+
+            case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
+                ResetTracking(); //can scan tutorial station while user is flipping page and it jumps all over the place so reset its tracking
+                shouldControllerBeTracking = false;
+                break;
+
+            case AppManager.AppState.Number02FirstBitScanning:
+            case AppManager.AppState.Number03SecondBitScanning:
+            case AppManager.AppState.Number04ThirdBitScanning:
+            case AppManager.AppState.Shape04FirstBitScanning:
+            case AppManager.AppState.Shape06SecondBitScanning:
+                ResetTracking();
+                Invoke("TurnOnTracking", 5f);
+                break;
+
+            case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
+                transform.GetChild(0).GetChild(0).GetComponent<TrackerEggy>().enabled = true;
+                shouldControllerBeTracking = false;
+                break;
+
+            case AppManager.AppState.Eggy03ScanningLesson: //lesson on how to recognize scannable images
+                Invoke("TurnOnTracking", 1f); //Since eggy is a poor tracker give more time to finding him
+                break;
+
+            case AppManager.AppState.Eggy05ActiveTrackingLesson: //lesson on how finding and tracking interactives
+            case AppManager.AppState.Tutorial03BitExplanation:
+                Invoke("TurnOnTracking", 5f);
+                break;
+
+            case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
+            case AppManager.AppState.Number01StationScanning:
+            case AppManager.AppState.Shape01StationScanning:
+            case AppManager.AppState.Color01StationScanning:
+                shouldControllerBeTracking = false;
+                Invoke("DelayRemoveContent", 3f);
+                Invoke("TurnOnTracking", 6f);
+                break;
+
+            //dont need to be scanning for new targets
+            case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
+            case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
+            case AppManager.AppState.Tutorial05CurrentStateExplanation:
+            case AppManager.AppState.Tutorial06GoblinRemove:
+            case AppManager.AppState.Tutorial07GoblinPractice: //confirm moving from tutorial to task station
+                ResetTracking();
+                break;
         }
     }
 
-    /// <summary>
-    /// The Unity Update method.
-    /// </summary>
     public void Update()
     {
         //rotate objects with finger swipe feature
         if (Input.GetMouseButton(0))
         {
             //printToScreen.text = Input.GetTouch(0).deltaPosition.x.ToString();
+
+            //make this check is its actively tracked first
             for (int i = 0; i < transform.childCount; i++)
-            {//make this check is its actively tracked first
+            {
                 //its a model, not a UI, so go rotate it
                 if (transform.GetChild(i).GetChild(0).gameObject.tag == "3DModel")
                 {
@@ -72,28 +126,6 @@ public class TrackingController : Listener
             }
         }
 
-        //two finger touch is the default touch interaction with the app
-        //if (Input.GetMouseButtonDown(1)) gameManager.UserInputDetected();
-        //got replaced with the continue button on the UI
-        /*
-        //Reset app to welcome screen
-        if (Input.GetMouseButtonDown(2))
-        {
-            
-            //shouldControllerBeTracking = false;
-            //removeExistingContent = true;
-            //remove3DContent = true;
-            //gameManager.StartApp();
-            //return;
-            
-            for(int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).GetComponent<TrackedImage>().anchor = transform.GetChild(i).GetComponent<TrackedImage>().image.CreateAnchor(transform.GetChild(i).GetComponent<TrackedImage>().image.CenterPose);
-                transform.GetChild(i).position = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.position;
-                transform.GetChild(i).rotation = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.rotation;
-            }
-        }
-        */
         // Exit the app when the 'back' button is pressed.
         if (Input.GetKey(KeyCode.Escape)) Application.Quit();
 
@@ -205,84 +237,13 @@ public class TrackingController : Listener
         }
     }
 
-    public override void SetListenerState()
+    public void ResetTracking()
     {
-        switch (gameManager.currentAppState)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            //add all shape station cases
-
-            case AppManager.AppState.Eggy01Welcome: //lesson on using two finger tap to move through app states
-            case AppManager.AppState.Eggy02ResetInstructions: //lesson on using three finger tap to reset app due to poor tracking
-            case AppManager.AppState.Eggy04RotatingLesson: //lesson on how to rotate trackers to align them with the images
-            case AppManager.AppState.Number02FirstBitExplaination:
-            case AppManager.AppState.Number03SecondBitExplaination:
-            case AppManager.AppState.Number04ThirdBitExplaination:
-            case AppManager.AppState.Number05SugarGoblinIntro:
-            case AppManager.AppState.Number06FirstExercise:
-            case AppManager.AppState.Number07SecondExercise:
-            case AppManager.AppState.Number08ThirdExercise:
-            case AppManager.AppState.Number09FourthExercise:
-            case AppManager.AppState.Shape02StationExplaination:
-            case AppManager.AppState.Shape03FirstBitExplaination:
-            case AppManager.AppState.Shape05SecondBitExplaination:
-            case AppManager.AppState.Shape07FinalExplaination:
-            case AppManager.AppState.Shape08FirstExercise:
-            case AppManager.AppState.Shape09SecondExercise:
-            case AppManager.AppState.Shape10ThirdExercise:
-            case AppManager.AppState.Color02StationExplanation:
-            default:
-                ResetTracking();
-                shouldControllerBeTracking = false;
-                break;
-
-            case AppManager.AppState.Tutorial02BitScanning: //lesson on how to find the tutorial interaction
-                ResetTracking(); //can scan tutorial station while user is flipping page and it jumps all over the place so reset its tracking
-                shouldControllerBeTracking = false;
-                break;
-
-            case AppManager.AppState.Number02FirstBitScanning:
-            case AppManager.AppState.Number03SecondBitScanning:
-            case AppManager.AppState.Number04ThirdBitScanning:
-            case AppManager.AppState.Shape04FirstBitScanning:
-            case AppManager.AppState.Shape06SecondBitScanning:
-                ResetTracking(); 
-                Invoke("TurnOnTracking", 5f);
-                break;
-
-            case AppManager.AppState.Eggy07TrackingExercise: //lesson on how finding and tracking interactives
-                transform.GetChild(0).GetChild(0).GetComponent<TrackerEggy>().enabled = true;
-                shouldControllerBeTracking = false;
-                break;
-
-            case AppManager.AppState.Eggy03ScanningLesson: //lesson on how to recognize scannable images
-                Invoke("TurnOnTracking", 1f); //Since eggy is a poor tracker give more time to finding him
-                break;
-
-            case AppManager.AppState.Eggy05ActiveTrackingLesson: //lesson on how finding and tracking interactives
-            case AppManager.AppState.Tutorial03BitExplanation:
-                Invoke("TurnOnTracking", 5f);
-                break;
-
-            case AppManager.AppState.Tutorial01StationScanning: //lesson on how to find the tutorial station
-            case AppManager.AppState.Number01StationScanning:
-            case AppManager.AppState.Shape01StationScanning:
-            case AppManager.AppState.Color01StationScanning:
-                //removeExistingContent = true;
-                //remove3DContent = true;
-
-                shouldControllerBeTracking = false;
-                Invoke("DelayRemoveContent", 3f);
-                Invoke("TurnOnTracking", 6f);
-                break;
-
-            //dont need to be scanning for new targets
-            case AppManager.AppState.Eggy06InactiveTrackingLesson: //lesson on how finding and tracking interactives
-            case AppManager.AppState.Tutorial04GoblinAdd: //lesson on how to turn a bit on with a piece of candy
-            case AppManager.AppState.Tutorial05CurrentStateExplanation:
-            case AppManager.AppState.Tutorial06GoblinRemove:
-            case AppManager.AppState.Tutorial07GoblinPractice: //confirm moving from tutorial to task station
-                ResetTracking();
-                break;
+            transform.GetChild(i).GetComponent<TrackedImage>().anchor = transform.GetChild(i).GetComponent<TrackedImage>().image.CreateAnchor(transform.GetChild(i).GetComponent<TrackedImage>().image.CenterPose);
+            transform.GetChild(i).position = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.position;
+            transform.GetChild(i).rotation = transform.GetChild(i).GetComponent<TrackedImage>().anchor.transform.rotation;
         }
     }
 

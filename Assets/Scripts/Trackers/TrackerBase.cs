@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using GoogleARCore;
-using GoogleARCoreInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TrackerBase : MonoBehaviour
 {
     public bool[] interfaceBits;
+
     private TrackedImage thisTrackedImage;
     private bool coolDownTime = true;
     private int stationCounter;
 
-    // Use this for initialization
     void Start()
     {
         thisTrackedImage = GetComponent<TrackedImage>();
@@ -25,6 +22,7 @@ public class TrackerBase : MonoBehaviour
 
         for (int i = 0; i < interfaceBits.Length; i++)
         {
+            //might use this in future to make the station UIs interactable
             //interfaceBits[i] = true;
         }
     }
@@ -47,7 +45,6 @@ public class TrackerBase : MonoBehaviour
 
     public bool TrackingNotice(string trackerName, bool isTracking)
     {
-
         if (trackerName == "eggy") interfaceBits[0] = isTracking;
 
         if (gameObject.name == "TaskStation(Clone)" || gameObject.name == "OutputStation(Clone)")
@@ -131,12 +128,12 @@ public class TrackerBase : MonoBehaviour
 
                 if (gameObject.name == "NumberStation(Clone)")
                 {
-
+                    //might use this in future to make the stations more interactable
                 }
 
                 if (gameObject.name == "ShapeStation(Clone)")
                 {
-
+                    //might use this in future to make the stations more interactable
                 }
             }
             else
@@ -145,12 +142,12 @@ public class TrackerBase : MonoBehaviour
 
                 if (gameObject.name == "NumberStation(Clone)")
                 {
-
+                    //might use this in future to make the stations more interactable
                 }
 
                 if (gameObject.name == "ShapeStation(Clone)")
                 {
-
+                    //might use this in future to make the stations more interactable
                 }
             }
             return true;
@@ -164,7 +161,7 @@ public class TrackerBase : MonoBehaviour
 
                 if (gameObject.name == "NumberStation(Clone)")
                 {
-
+                    //might use this in future to make the stations more interactable
                 }
             }
             else
@@ -173,7 +170,7 @@ public class TrackerBase : MonoBehaviour
 
                 if (gameObject.name == "NumberStation(Clone)")
                 {
-
+                    //might use this in future to make the stations more interactable
                 }
             }
             return true;

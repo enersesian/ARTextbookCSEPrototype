@@ -6,68 +6,18 @@ using UnityEngine.UI;
 public class View : Listener
 {
     public Text printToScreenTop, printToScreenBottom;
-
-    /// <summary>
-    /// The overlay containing the fit to scan user guide.
-    /// </summary>
-
     public Transition_UI trackingStatusIconTransition, trackingStatusGreenHighlightTransition;
     public Button trackingResetButton, continueInstructionButton, submitAnswerButton;
+    public Text objectiveStatusText, currentStatusText;
+
+    private bool canSetCurrentStatusText, canSetObjectiveStatusText;
     private enum TrackingStatusState { NotSearchingAndNotTracking, SearchingForATrackableNew, SearchingForATrackableContinued, TrackedAtLeastOneTrackable };
     private TrackingStatusState currentTrackingStatusState;
-    public Text objectiveStatusText, currentStatusText;
-    private bool canSetCurrentStatusText, canSetObjectiveStatusText;
 
     private void Start()
     {
         currentTrackingStatusState = TrackingStatusState.NotSearchingAndNotTracking;
         SetRightSideUIToDefault();
-    }
-
-    private void TrackingStatusUpdate(TrackingStatusState nextTrackingStatusIconState)
-    {
-        //Turn off tracking from any state
-        if(nextTrackingStatusIconState == TrackingStatusState.NotSearchingAndNotTracking)
-        {
-            currentTrackingStatusState = TrackingStatusState.NotSearchingAndNotTracking;
-            trackingStatusIconTransition.repeaterForTrackingStatus = false;
-            trackingStatusIconTransition.TurnOff();
-            trackingStatusGreenHighlightTransition.TurnOff();
-            trackingResetButton.interactable = false;
-        }
-
-        //Turn on searching from nothing state
-        if(nextTrackingStatusIconState == TrackingStatusState.SearchingForATrackableNew)
-        {
-            currentTrackingStatusState = TrackingStatusState.SearchingForATrackableNew;
-            trackingStatusIconTransition.repeaterForTrackingStatus = true;
-            trackingStatusIconTransition.TurnOn();
-            trackingStatusGreenHighlightTransition.TurnOff();
-            trackingResetButton.interactable = false;
-
-            //invoke turn on tracking reset button after x seconds
-        }
-
-        //Turn on searching again while tracking
-        if (nextTrackingStatusIconState == TrackingStatusState.SearchingForATrackableContinued)
-        {
-            currentTrackingStatusState = TrackingStatusState.SearchingForATrackableContinued;
-            trackingStatusIconTransition.repeaterForTrackingStatus = true;
-            trackingStatusIconTransition.TurnOn();
-            //trackingStatusGreenHighlightTransition.TurnOn();
-
-            //invoke turn on tracking reset button after x seconds
-        }
-
-        //Tracking at least one image
-        if (nextTrackingStatusIconState == TrackingStatusState.TrackedAtLeastOneTrackable)
-        {
-            currentTrackingStatusState = TrackingStatusState.TrackedAtLeastOneTrackable;
-            trackingStatusIconTransition.repeaterForTrackingStatus = false;
-            trackingStatusIconTransition.TurnOff();
-            trackingStatusGreenHighlightTransition.TurnOn();
-            trackingResetButton.interactable = true;
-        }
     }
 
     public override void SetListenerState()
@@ -350,6 +300,47 @@ public class View : Listener
 
             default:
                 break;
+        }
+    }
+
+    private void TrackingStatusUpdate(TrackingStatusState nextTrackingStatusIconState)
+    {
+        //Turn off tracking from any state
+        if (nextTrackingStatusIconState == TrackingStatusState.NotSearchingAndNotTracking)
+        {
+            currentTrackingStatusState = TrackingStatusState.NotSearchingAndNotTracking;
+            trackingStatusIconTransition.repeaterForTrackingStatus = false;
+            trackingStatusIconTransition.TurnOff();
+            trackingStatusGreenHighlightTransition.TurnOff();
+            trackingResetButton.interactable = false;
+        }
+
+        //Turn on searching from nothing state
+        if (nextTrackingStatusIconState == TrackingStatusState.SearchingForATrackableNew)
+        {
+            currentTrackingStatusState = TrackingStatusState.SearchingForATrackableNew;
+            trackingStatusIconTransition.repeaterForTrackingStatus = true;
+            trackingStatusIconTransition.TurnOn();
+            trackingStatusGreenHighlightTransition.TurnOff();
+            trackingResetButton.interactable = false;
+        }
+
+        //Turn on searching again while tracking
+        if (nextTrackingStatusIconState == TrackingStatusState.SearchingForATrackableContinued)
+        {
+            currentTrackingStatusState = TrackingStatusState.SearchingForATrackableContinued;
+            trackingStatusIconTransition.repeaterForTrackingStatus = true;
+            trackingStatusIconTransition.TurnOn();
+        }
+
+        //Tracking at least one image
+        if (nextTrackingStatusIconState == TrackingStatusState.TrackedAtLeastOneTrackable)
+        {
+            currentTrackingStatusState = TrackingStatusState.TrackedAtLeastOneTrackable;
+            trackingStatusIconTransition.repeaterForTrackingStatus = false;
+            trackingStatusIconTransition.TurnOff();
+            trackingStatusGreenHighlightTransition.TurnOn();
+            trackingResetButton.interactable = true;
         }
     }
 

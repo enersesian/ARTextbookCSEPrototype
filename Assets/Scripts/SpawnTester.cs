@@ -5,15 +5,12 @@ using UnityEngine;
 public class SpawnTester : MonoBehaviour
 {
     public GameObject spawned;
-	// Use this for initialization
+
+	//initialization testing of prefabs
 	void Start () {
         Instantiate(spawned);
         Instantiate(spawned);
         Instantiate(spawned);
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }
